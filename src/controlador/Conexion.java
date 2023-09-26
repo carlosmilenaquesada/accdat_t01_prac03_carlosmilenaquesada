@@ -22,7 +22,6 @@ public class Conexion {
         ArrayList<AlumnoAD> coleccion = null;
         FileInputStream fis = null;
         ObjectInputStream ois = null;
-                System.out.println("hola");
 
         if (FILE.exists() && FILE.isFile()) {
             try {
@@ -30,12 +29,14 @@ public class Conexion {
                 ois = new ObjectInputStream(fis);
                 coleccion = (ArrayList<AlumnoAD>) ois.readObject();
             } catch (FileNotFoundException ex) {
-                System.out.println(ex);
+                
             } catch (IOException ex) {
-                System.out.println(ex);
+               
             } catch (ClassNotFoundException ex) {
-                System.out.println(ex);
-            } finally {
+                
+            } catch(Exception ex){
+            
+            }finally {
                 try {
                     if (ois != null) {
                         ois.close();
@@ -44,7 +45,7 @@ public class Conexion {
                         fis.close();
                     }
                 } catch (IOException ex) {
-                    System.out.println(ex);
+                   
                 }
             }
         }
@@ -59,11 +60,13 @@ public class Conexion {
                 fos = new FileOutputStream(FILE);
                 oos = new ObjectOutputStream(fos);
                 oos.writeObject(coleccionModificada);
-                System.out.println("asdf");
+                
             } catch (FileNotFoundException ex) {
-                System.out.println(ex);
+                
             } catch (IOException ex) {
-                System.out.println(ex);
+                
+            } catch (Exception ex){
+            
             } finally {
                 try {
                     if (oos != null) {
@@ -73,14 +76,19 @@ public class Conexion {
                         fos.close();
                     }
                 } catch (IOException ex) {
-                    System.out.println(ex);
+                    
                 }
             }
         }
     }
     
     public static void main(String args[]){
-        exportarColecion(new ArrayList<AlumnoAD>());
+       /*ArrayList<AlumnoAD> lista = new ArrayList<>();
+       
+       lista.add(new AlumnoAD(1234, "luis", 5f, 6f, 7f, 8f));
+       
+        exportarColecion(lista);*/
+       
     
     }
 

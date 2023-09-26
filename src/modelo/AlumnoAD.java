@@ -81,4 +81,25 @@ public class AlumnoAD implements Serializable {
     public float getNotaExtra() {
         return this.notaExtra;
     }
+    
+    
+    //SOBRECARGAS
+    //--------------------------------------------------------------------------
+    @Override
+    public boolean equals(Object o){
+        boolean esIgual = false;
+        if(o instanceof AlumnoAD){
+            AlumnoAD alumnoAD = (AlumnoAD)o;
+            if(this.nMatricula == alumnoAD.nMatricula){
+                esIgual = true;
+            }
+        }        
+        return esIgual;        
+    }
+    
+
+    @Override
+    public int hashCode(){
+        return this.nMatricula;    
+    }
 }
