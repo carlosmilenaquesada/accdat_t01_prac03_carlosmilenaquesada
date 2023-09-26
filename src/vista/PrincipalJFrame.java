@@ -2,20 +2,44 @@ package vista;
 
 import controlador.Conexion;
 import controlador.CrudDatos;
-import static java.lang.Float.parseFloat;
 import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import modelo.AlumnoAD;
 
 public class PrincipalJFrame extends javax.swing.JFrame {
 
     ArrayList<AlumnoAD> alumnosAD = null;
 
+    //ELEMENTOS PESTAÑA READ
+    DefaultListModel dlmRead = null;
+    DefaultTableModel dtmRead = null;
+
+    //ELEMENTOS PESTAÑA UPDATE
+    DefaultListModel dlmUpdate = null;
+
     public PrincipalJFrame() {
         initComponents();
-
         alumnosAD = Conexion.importarColeccion();
+
+        //ELEMENTOS PESTAÑA READ
+        dlmRead = new DefaultListModel();
+        jListLeer.setModel(dlmRead);
+        dtmRead = new DefaultTableModel();
+        dtmRead.setColumnIdentifiers(new String[]{
+            "Nº Matricula", "Nombre Alumno", "Nota 1ª Ev.", "Nota 2ª Ev.", "Nota final", "Nota extra"
+        });
+        jTableLeerTabla.setModel(dtmRead);
+
+        //ELEMENTOS PESTAÑA UPDATE
+        dlmUpdate = new DefaultListModel();
+        jListModificar.setModel(dlmUpdate);
+
     }
 
     @SuppressWarnings("unchecked")
@@ -37,7 +61,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jLabelCrearNotExtra = new javax.swing.JLabel();
         jTextFieldCrearNotExtra = new javax.swing.JTextField();
         jButtonCrear = new javax.swing.JButton();
-        jButtonLimpiar = new javax.swing.JButton();
+        jButtonCrearLimpiar = new javax.swing.JButton();
         jPanelLeer = new javax.swing.JPanel();
         jLabelLeer = new javax.swing.JLabel();
         jScrollPaneLeerLista = new javax.swing.JScrollPane();
@@ -52,7 +76,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jTextFieldModificarNombre = new javax.swing.JTextField();
         jTextFieldModificarNot1Ev = new javax.swing.JTextField();
         jTextFieldModificarNot2Ev = new javax.swing.JTextField();
-        jTextFieleModificarNotFinal = new javax.swing.JTextField();
+        jTextFieldModificarNotFinal = new javax.swing.JTextField();
         jTextFieldModificarNotExtra = new javax.swing.JTextField();
         jLabelModificarNotExtra = new javax.swing.JLabel();
         jLabelModificarNotFinal = new javax.swing.JLabel();
@@ -63,7 +87,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jButtonModificar = new javax.swing.JButton();
         jLabelModificar = new javax.swing.JLabel();
         jScrollPaneModificarLista = new javax.swing.JScrollPane();
-        jListLeerModificar = new javax.swing.JList<>();
+        jListModificar = new javax.swing.JList<>();
         jButtonModificarIniciar = new javax.swing.JButton();
         jPanelBorrar = new javax.swing.JPanel();
         jLabelBorrar = new javax.swing.JLabel();
@@ -84,6 +108,12 @@ public class PrincipalJFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jTabbedPaneGeneral.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jTabbedPaneGeneralStateChanged(evt);
+            }
+        });
+
         jLabelCrearMatricula.setText("Número de matrícula");
 
         jLabelCrearNombre.setText("Nombre y apellidos");
@@ -103,7 +133,12 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             }
         });
 
-        jButtonLimpiar.setText("Limpiar campos");
+        jButtonCrearLimpiar.setText("Limpiar campos");
+        jButtonCrearLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCrearLimpiarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelCrearLayout = new javax.swing.GroupLayout(jPanelCrear);
         jPanelCrear.setLayout(jPanelCrearLayout);
@@ -123,7 +158,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
                     .addComponent(jTextFieldCrearNotExtra, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(jPanelCrearLayout.createSequentialGroup()
-                            .addComponent(jButtonLimpiar)
+                            .addComponent(jButtonCrearLimpiar)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButtonCrear))
                         .addComponent(jTextFieldCrearMatricula, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
@@ -162,7 +197,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
                     .addComponent(jLabelCrearNotExtra))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonLimpiar)
+                    .addComponent(jButtonCrearLimpiar)
                     .addComponent(jButtonCrear))
                 .addContainerGap(66, Short.MAX_VALUE))
         );
@@ -179,6 +214,11 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jScrollPaneLeerLista.setViewportView(jListLeer);
 
         jButtonLeerAniadir.setText("Añadir a tabla");
+        jButtonLeerAniadir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLeerAniadirActionPerformed(evt);
+            }
+        });
 
         jTableLeerTabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -190,11 +230,25 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        ));
-        jTableLeerTabla.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTableLeerTabla.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        jTableLeerTabla.getTableHeader().setReorderingAllowed(false);
         jScrollPaneLeerTabla.setViewportView(jTableLeerTabla);
 
         jButtonLeerLimpiarTabla.setText("Limpiar tabla");
+        jButtonLeerLimpiarTabla.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLeerLimpiarTablaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelLeerLayout = new javax.swing.GroupLayout(jPanelLeer);
         jPanelLeer.setLayout(jPanelLeerLayout);
@@ -235,6 +289,8 @@ public class PrincipalJFrame extends javax.swing.JFrame {
 
         jLabelModificarMatricula.setText("Número de matrícula");
 
+        jTextFieldModificarMatricula.setEditable(false);
+
         jLabelModificarNotExtra.setText("Nota extra");
 
         jLabelModificarNotFinal.setText("Nota final");
@@ -251,14 +307,20 @@ public class PrincipalJFrame extends javax.swing.JFrame {
 
         jLabelModificar.setText("Elige nº  matrícula");
 
-        jListLeerModificar.setModel(new javax.swing.AbstractListModel<String>() {
+        jListModificar.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPaneModificarLista.setViewportView(jListLeerModificar);
+        jListModificar.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPaneModificarLista.setViewportView(jListModificar);
 
         jButtonModificarIniciar.setText("Iniciar modificación");
+        jButtonModificarIniciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonModificarIniciarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelActualizarLayout = new javax.swing.GroupLayout(jPanelActualizar);
         jPanelActualizar.setLayout(jPanelActualizarLayout);
@@ -279,7 +341,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
                     .addComponent(jTextFieldModificarNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                     .addComponent(jTextFieldModificarNot1Ev, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                     .addComponent(jTextFieldModificarNot2Ev, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                    .addComponent(jTextFieleModificarNotFinal, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                    .addComponent(jTextFieldModificarNotFinal, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                     .addComponent(jTextFieldModificarNotExtra, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelActualizarLayout.createSequentialGroup()
                         .addComponent(jButtonModificarLimpiar)
@@ -317,7 +379,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanelActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelModificarNotFinal)
-                            .addComponent(jTextFieleModificarNotFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextFieldModificarNotFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanelActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextFieldModificarNotExtra, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -468,23 +530,128 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
-        AlumnoAD aluAD = new AlumnoAD(
-                parseInt(jTextFieldCrearMatricula.getText()),
-                jTextFieldCrearNombre.getText(),
-                parseFloat(jTextFieldCrearNot1Ev.getText()),
-                parseFloat(jTextFieldCrearNot2Ev.getText()),
-                parseFloat(jTextFieldCrearNotFinal.getText()),
-                parseFloat(jTextFieldCrearNotExtra.getText())
-        );
-
-        if (CrudDatos.create(alumnosAD, aluAD)) {
-            
-        }else{
-            JOptionPane.showMessageDialog(null, "Ya existe un alumno con el número de matrícula: \n"
-                    + aluAD.getNMatricula() + "\nNo se puede crear el alumno. Pruebe otro número de matrícula.");
+    //MÉTODOS AUXILIARES
+    //--------------------------------------------------------------------------
+    private void actualizarListaMatriculas(DefaultListModel dlm) {
+        dlm.removeAllElements();
+        for (AlumnoAD a : alumnosAD) {
+            dlm.addElement(a.getNMatricula());
         }
+    }
+
+    private void agregarDeListaATabla(JList jList, DefaultTableModel dtm) {
+        List listaMatriculas = jList.getSelectedValuesList();
+        for (AlumnoAD a : alumnosAD) {
+            if (listaMatriculas.contains(a.getNMatricula())) {
+                dtm.addRow(new Object[]{
+                    a.getNMatricula(),
+                    a.getNombre(),
+                    a.getNot1Ev(),
+                    a.getNota2Ev(),
+                    a.getNotaExtra(),
+                    a.getNotaFinal()}
+                );
+
+            }
+        }
+
+    }
+
+    private void limpiarTabla(DefaultTableModel dtm) {
+        for (int i = dtm.getRowCount() - 1; i >= 0; i--) {
+            dtm.removeRow(i);
+        }
+    }
+
+    private void agregarDeListaACamposModificacion(JList jList) {
+        for (AlumnoAD a : alumnosAD) {
+            if (a.getNMatricula() == (Integer) jList.getSelectedValue()) {
+                jTextFieldModificarMatricula.setText(Integer.toString(a.getNMatricula()));
+                jTextFieldModificarNombre.setText(a.getNombre());
+                jTextFieldModificarNot1Ev.setText(Float.toString(a.getNot1Ev()));
+                jTextFieldModificarNot2Ev.setText(Float.toString(a.getNota2Ev()));
+                jTextFieldModificarNotFinal.setText(Float.toString(a.getNotaFinal()));
+                jTextFieldModificarNotExtra.setText(Float.toString(a.getNotaExtra()));
+            }
+        }
+    }
+
+    private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
+        AlumnoAD aluAD = null;
+
+        if (!jTextFieldCrearMatricula.getText().isEmpty()) {
+            try {
+                int nMatr = parseInt(jTextFieldCrearMatricula.getText());
+                String nomb = jTextFieldCrearNombre.getText().isEmpty() ? null : jTextFieldCrearNombre.getText();
+                Float not1ev = jTextFieldCrearNot1Ev.getText().isEmpty() ? null : Float.valueOf(jTextFieldCrearNot1Ev.getText());
+                Float not2ev = jTextFieldCrearNot2Ev.getText().isEmpty() ? null : Float.valueOf(jTextFieldCrearNot2Ev.getText());
+                Float notFin = jTextFieldCrearNotFinal.getText().isEmpty() ? null : Float.valueOf(jTextFieldCrearNotFinal.getText());
+                Float notExt = jTextFieldCrearNotExtra.getText().isEmpty() ? null : Float.valueOf(jTextFieldCrearNotExtra.getText());
+                aluAD = new AlumnoAD(nMatr, nomb, not1ev, not2ev, notFin, notExt);
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "El número de matrícula solo admite números enteros.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe introducir al menos el número de matrícula.");
+        }
+
+        if (aluAD != null) {
+            System.out.println(alumnosAD);
+            System.out.println(aluAD);
+            if (CrudDatos.create(alumnosAD, aluAD)) {
+                JOptionPane.showMessageDialog(null, "El alumno: \n"
+                        + aluAD.toString() + "\nHa sido creado correctamente");
+            } else {
+                JOptionPane.showMessageDialog(null, "Ya existe un alumno con el"
+                        + " número de matrícula: " + aluAD.getNMatricula() + "."
+                        + "\nNo se puede crear el alumno. Pruebe otro número dematrícula.");
+            }
+        }
+
     }//GEN-LAST:event_jButtonCrearActionPerformed
+
+    private void jButtonCrearLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearLimpiarActionPerformed
+        jTextFieldCrearMatricula.setText("");
+        jTextFieldCrearNombre.setText("");
+        jTextFieldCrearNot1Ev.setText("");
+        jTextFieldCrearNot2Ev.setText("");
+        jTextFieldCrearNotFinal.setText("");
+        jTextFieldCrearNotExtra.setText("");
+        Conexion.exportarColecion(alumnosAD);
+    }//GEN-LAST:event_jButtonCrearLimpiarActionPerformed
+
+    private void jTabbedPaneGeneralStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPaneGeneralStateChanged
+        // TODO add your handling code here:
+        int indexActual = jTabbedPaneGeneral.getModel().getSelectedIndex();
+
+        switch (indexActual) {
+            case 0:
+                break;
+            case 1:
+                actualizarListaMatriculas(dlmRead);
+                break;
+            case 2:
+                actualizarListaMatriculas(dlmUpdate);
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+        }
+    }//GEN-LAST:event_jTabbedPaneGeneralStateChanged
+
+    private void jButtonLeerAniadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLeerAniadirActionPerformed
+        agregarDeListaATabla(jListLeer, dtmRead);
+    }//GEN-LAST:event_jButtonLeerAniadirActionPerformed
+
+    private void jButtonLeerLimpiarTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLeerLimpiarTablaActionPerformed
+        limpiarTabla(dtmRead);
+    }//GEN-LAST:event_jButtonLeerLimpiarTablaActionPerformed
+
+    private void jButtonModificarIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarIniciarActionPerformed
+        agregarDeListaACamposModificacion(jListModificar);
+    }//GEN-LAST:event_jButtonModificarIniciarActionPerformed
 
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -522,12 +689,12 @@ public class PrincipalJFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButtonBorrarLimpiarTabla;
     private javax.swing.JButton jButtonBorrarRegistros;
     private javax.swing.JButton jButtonCrear;
+    private javax.swing.JButton jButtonCrearLimpiar;
     private javax.swing.JButton jButtonGuardarDescartar;
     private javax.swing.JButton jButtonGuardarDescartarSalir;
     private javax.swing.JButton jButtonGuardarGuardarSalir;
     private javax.swing.JButton jButtonLeerAniadir;
     private javax.swing.JButton jButtonLeerLimpiarTabla;
-    private javax.swing.JButton jButtonLimpiar;
     private javax.swing.JButton jButtonModificar;
     private javax.swing.JButton jButtonModificarIniciar;
     private javax.swing.JButton jButtonModificarLimpiar;
@@ -551,7 +718,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelModificarNotFinal;
     private javax.swing.JList<String> jListBorrar;
     private javax.swing.JList<String> jListLeer;
-    private javax.swing.JList<String> jListLeerModificar;
+    private javax.swing.JList<String> jListModificar;
     private javax.swing.JPanel jPanelActualizar;
     private javax.swing.JPanel jPanelBorrar;
     private javax.swing.JPanel jPanelCrear;
@@ -576,6 +743,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldModificarNot1Ev;
     private javax.swing.JTextField jTextFieldModificarNot2Ev;
     private javax.swing.JTextField jTextFieldModificarNotExtra;
-    private javax.swing.JTextField jTextFieleModificarNotFinal;
+    private javax.swing.JTextField jTextFieldModificarNotFinal;
     // End of variables declaration//GEN-END:variables
+
 }

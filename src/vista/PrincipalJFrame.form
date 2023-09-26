@@ -37,6 +37,9 @@
   </Layout>
   <SubComponents>
     <Container class="javax.swing.JTabbedPane" name="jTabbedPaneGeneral">
+      <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jTabbedPaneGeneralStateChanged"/>
+      </Events>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
@@ -67,7 +70,7 @@
                           <Component id="jTextFieldCrearNotExtra" min="-2" pref="250" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jButtonLimpiar" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jButtonCrearLimpiar" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Component id="jButtonCrear" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -117,7 +120,7 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jButtonLimpiar" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButtonCrearLimpiar" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jButtonCrear" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="66" max="32767" attributes="0"/>
@@ -176,10 +179,13 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonCrearActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButtonLimpiar">
+            <Component class="javax.swing.JButton" name="jButtonCrearLimpiar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Limpiar campos"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonCrearLimpiarActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -271,6 +277,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="A&#xf1;adir a tabla"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLeerAniadirActionPerformed"/>
+              </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPaneLeerTabla">
               <AuxValues>
@@ -283,10 +292,10 @@
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="4" rowCount="4">
-                        <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                        <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                        <Column editable="true" title="Title 3" type="java.lang.Object"/>
-                        <Column editable="true" title="Title 4" type="java.lang.Object"/>
+                        <Column editable="false" title="Title 1" type="java.lang.Object"/>
+                        <Column editable="false" title="Title 2" type="java.lang.Object"/>
+                        <Column editable="false" title="Title 3" type="java.lang.Object"/>
+                        <Column editable="false" title="Title 4" type="java.lang.Object"/>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -313,9 +322,9 @@
                         </Column>
                       </TableColumnModel>
                     </Property>
-                    <Property name="selectionMode" type="int" value="0"/>
+                    <Property name="selectionMode" type="int" value="2"/>
                     <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
-                      <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+                      <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
                     </Property>
                   </Properties>
                 </Component>
@@ -325,6 +334,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Limpiar tabla"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLeerLimpiarTablaActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -356,7 +368,7 @@
                           <Component id="jTextFieldModificarNombre" alignment="0" pref="250" max="32767" attributes="0"/>
                           <Component id="jTextFieldModificarNot1Ev" alignment="0" pref="250" max="32767" attributes="0"/>
                           <Component id="jTextFieldModificarNot2Ev" alignment="0" pref="250" max="32767" attributes="0"/>
-                          <Component id="jTextFieleModificarNotFinal" alignment="0" pref="250" max="32767" attributes="0"/>
+                          <Component id="jTextFieldModificarNotFinal" alignment="0" pref="250" max="32767" attributes="0"/>
                           <Component id="jTextFieldModificarNotExtra" pref="250" max="32767" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="jButtonModificarLimpiar" min="-2" max="-2" attributes="0"/>
@@ -403,7 +415,7 @@
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabelModificarNotFinal" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jTextFieleModificarNotFinal" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                                  <Component id="jTextFieldModificarNotFinal" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
@@ -436,6 +448,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextFieldModificarMatricula">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextFieldModificarNombre">
             </Component>
@@ -443,7 +458,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="jTextFieldModificarNot2Ev">
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextFieleModificarNotFinal">
+            <Component class="javax.swing.JTextField" name="jTextFieldModificarNotFinal">
             </Component>
             <Component class="javax.swing.JTextField" name="jTextFieldModificarNotExtra">
             </Component>
@@ -494,7 +509,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JList" name="jListLeerModificar">
+                <Component class="javax.swing.JList" name="jListModificar">
                   <Properties>
                     <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
                       <StringArray count="5">
@@ -505,6 +520,7 @@
                         <StringItem index="4" value="Item 5"/>
                       </StringArray>
                     </Property>
+                    <Property name="selectionMode" type="int" value="0"/>
                   </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -516,6 +532,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Iniciar modificaci&#xf3;n"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonModificarIniciarActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
