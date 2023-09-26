@@ -8,13 +8,15 @@ public class CrudDatos {
     public CrudDatos() {
     }
 
-    public void create(ArrayList<AlumnoAD> lista, AlumnoAD alumnoAD) {
+    public static boolean create(ArrayList<AlumnoAD> lista, AlumnoAD alumnoAD) {
+        boolean creado = false;
         if (!lista.contains(alumnoAD)) {
-            lista.add(alumnoAD);
+            creado = lista.add(alumnoAD);
         }
+        return creado;
     }
 
-    public AlumnoAD read(ArrayList<AlumnoAD> lista, int idElemento) {
+    public static AlumnoAD read(ArrayList<AlumnoAD> lista, int idElemento) {
         AlumnoAD alumnoAD = null;
         boolean encontrado = false;
         for (int i = 0; i < lista.size() && encontrado == false; i++) {
@@ -26,7 +28,7 @@ public class CrudDatos {
         return alumnoAD;
     }
 
-    public void update(ArrayList<AlumnoAD> lista, AlumnoAD alumnoAD) {
+    public static void update(ArrayList<AlumnoAD> lista, AlumnoAD alumnoAD) {
 
         boolean encontrado = false;
 
@@ -42,7 +44,7 @@ public class CrudDatos {
         }
     }
 
-    public void delete(ArrayList<AlumnoAD> lista, int idElemento) {
+    public static void delete(ArrayList<AlumnoAD> lista, int idElemento) {
         boolean encontrado = false;
         for (int i = 0; i < lista.size() && encontrado == false; i++) {
             if (lista.get(i).getNMatricula() == idElemento) {

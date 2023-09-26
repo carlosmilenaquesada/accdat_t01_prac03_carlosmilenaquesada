@@ -1,8 +1,21 @@
 package vista;
- 
+
+import controlador.Conexion;
+import controlador.CrudDatos;
+import static java.lang.Float.parseFloat;
+import static java.lang.Integer.parseInt;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import modelo.AlumnoAD;
+
 public class PrincipalJFrame extends javax.swing.JFrame {
+
+    ArrayList<AlumnoAD> alumnosAD = null;
+
     public PrincipalJFrame() {
         initComponents();
+
+        alumnosAD = Conexion.importarColeccion();
     }
 
     @SuppressWarnings("unchecked")
@@ -22,7 +35,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jLabelCrearNotFinal = new javax.swing.JLabel();
         jTextFieldCrearNotFinal = new javax.swing.JTextField();
         jLabelCrearNotExtra = new javax.swing.JLabel();
-        jTextFieldNotExtra = new javax.swing.JTextField();
+        jTextFieldCrearNotExtra = new javax.swing.JTextField();
         jButtonCrear = new javax.swing.JButton();
         jButtonLimpiar = new javax.swing.JButton();
         jPanelLeer = new javax.swing.JPanel();
@@ -84,6 +97,11 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jLabelCrearNotExtra.setText("Nota extra");
 
         jButtonCrear.setText("Crear");
+        jButtonCrear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCrearActionPerformed(evt);
+            }
+        });
 
         jButtonLimpiar.setText("Limpiar campos");
 
@@ -102,7 +120,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
                     .addComponent(jLabelCrearNotExtra))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldNotExtra, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldCrearNotExtra, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(jPanelCrearLayout.createSequentialGroup()
                             .addComponent(jButtonLimpiar)
@@ -140,7 +158,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
                     .addComponent(jTextFieldCrearNotFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldNotExtra, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldCrearNotExtra, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelCrearNotExtra))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -450,6 +468,24 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
+        AlumnoAD aluAD = new AlumnoAD(
+                parseInt(jTextFieldCrearMatricula.getText()),
+                jTextFieldCrearNombre.getText(),
+                parseFloat(jTextFieldCrearNot1Ev.getText()),
+                parseFloat(jTextFieldCrearNot2Ev.getText()),
+                parseFloat(jTextFieldCrearNotFinal.getText()),
+                parseFloat(jTextFieldCrearNotExtra.getText())
+        );
+
+        if (CrudDatos.create(alumnosAD, aluAD)) {
+            
+        }else{
+            JOptionPane.showMessageDialog(null, "Ya existe un alumno con el número de matrícula: \n"
+                    + aluAD.getNMatricula() + "\nNo se puede crear el alumno. Pruebe otro número de matrícula.");
+        }
+    }//GEN-LAST:event_jButtonCrearActionPerformed
+
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -533,13 +569,13 @@ public class PrincipalJFrame extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldCrearNombre;
     private javax.swing.JTextField jTextFieldCrearNot1Ev;
     private javax.swing.JTextField jTextFieldCrearNot2Ev;
+    private javax.swing.JTextField jTextFieldCrearNotExtra;
     private javax.swing.JTextField jTextFieldCrearNotFinal;
     private javax.swing.JTextField jTextFieldModificarMatricula;
     private javax.swing.JTextField jTextFieldModificarNombre;
     private javax.swing.JTextField jTextFieldModificarNot1Ev;
     private javax.swing.JTextField jTextFieldModificarNot2Ev;
     private javax.swing.JTextField jTextFieldModificarNotExtra;
-    private javax.swing.JTextField jTextFieldNotExtra;
     private javax.swing.JTextField jTextFieleModificarNotFinal;
     // End of variables declaration//GEN-END:variables
 }

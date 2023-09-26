@@ -82,14 +82,6 @@ public class Conexion {
         }
     }
     
-    public static void main(String args[]){
-       /*ArrayList<AlumnoAD> lista = new ArrayList<>();
-       
-       lista.add(new AlumnoAD(1234, "luis", 5f, 6f, 7f, 8f));
-       
-        exportarColecion(lista);*/
-       
     
-    }
 
 }
