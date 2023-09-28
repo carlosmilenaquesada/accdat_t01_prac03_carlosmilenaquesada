@@ -2,13 +2,15 @@ package vista;
 
 import controlador.Conexion;
 import controlador.CrudDatos;
+import java.awt.Color;
 import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import modelo.AlumnoAD;
 
@@ -16,12 +18,22 @@ public class PrincipalJFrame extends javax.swing.JFrame {
 
     ArrayList<AlumnoAD> alumnosAD = null;
 
+    //VARIABLES AUXILIARES
+    String regexMatricula = "^-?\\d+$";
+    String regexNotas = "^-?\\d+(\\.\\d+)?$";
+    Color miRojo = new Color(255, 105, 97);
+    Color defecto = Color.WHITE;
+
     //ELEMENTOS PESTAÑA READ
     DefaultListModel dlmRead = null;
     DefaultTableModel dtmRead = null;
 
     //ELEMENTOS PESTAÑA UPDATE
     DefaultListModel dlmUpdate = null;
+
+    //ELEMENTOS PESTAÑA DELETE
+    DefaultListModel dlmDelete = null;
+    DefaultTableModel dtmDelete = null;
 
     public PrincipalJFrame() {
         initComponents();
@@ -40,6 +52,14 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         dlmUpdate = new DefaultListModel();
         jListModificar.setModel(dlmUpdate);
 
+        //ELEMENTOS DE LA PESTAÑA BORRAR
+        dlmDelete = new DefaultListModel();
+        jListBorrar.setModel(dlmDelete);
+        dtmDelete = new DefaultTableModel();
+        dtmDelete.setColumnIdentifiers(new String[]{
+            "Nº Matricula", "Nombre Alumno", "Nota 1ª Ev.", "Nota 2ª Ev.", "Nota final", "Nota extra"
+        });
+        jTableBorrarTabla.setModel(dtmDelete);
     }
 
     @SuppressWarnings("unchecked")
@@ -62,14 +82,18 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jTextFieldCrearNotExtra = new javax.swing.JTextField();
         jButtonCrear = new javax.swing.JButton();
         jButtonCrearLimpiar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
         jPanelLeer = new javax.swing.JPanel();
-        jLabelLeer = new javax.swing.JLabel();
         jScrollPaneLeerLista = new javax.swing.JScrollPane();
         jListLeer = new javax.swing.JList<>();
         jButtonLeerAniadir = new javax.swing.JButton();
         jScrollPaneLeerTabla = new javax.swing.JScrollPane();
         jTableLeerTabla = new javax.swing.JTable();
         jButtonLeerLimpiarTabla = new javax.swing.JButton();
+        jRadioButtonLeerTexto = new javax.swing.JRadioButton();
+        jRadioButtonLeerLista = new javax.swing.JRadioButton();
+        jLabel1 = new javax.swing.JLabel();
+        jTextFieldLeerManual = new javax.swing.JTextField();
         jPanelActualizar = new javax.swing.JPanel();
         jLabelModificarMatricula = new javax.swing.JLabel();
         jTextFieldModificarMatricula = new javax.swing.JTextField();
@@ -114,24 +138,76 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             }
         });
 
+        jPanelCrear.setLayout(null);
+
+        jLabelCrearMatricula.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelCrearMatricula.setText("Número de matrícula");
+        jLabelCrearMatricula.setPreferredSize(new java.awt.Dimension(150, 14));
+        jPanelCrear.add(jLabelCrearMatricula);
+        jLabelCrearMatricula.setBounds(50, 50, 150, 14);
 
+        jTextFieldCrearMatricula.setPreferredSize(new java.awt.Dimension(20, 20));
+        jPanelCrear.add(jTextFieldCrearMatricula);
+        jTextFieldCrearMatricula.setBounds(220, 40, 300, 30);
+
+        jLabelCrearNombre.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelCrearNombre.setText("Nombre y apellidos");
+        jLabelCrearNombre.setPreferredSize(new java.awt.Dimension(150, 14));
+        jPanelCrear.add(jLabelCrearNombre);
+        jLabelCrearNombre.setBounds(50, 90, 150, 14);
 
+        jTextFieldCrearNombre.setPreferredSize(new java.awt.Dimension(20, 20));
+        jPanelCrear.add(jTextFieldCrearNombre);
+        jTextFieldCrearNombre.setBounds(220, 80, 300, 30);
+
+        jLabelCrearNot1Ev.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelCrearNot1Ev.setText("Nota primera evaluación");
+        jLabelCrearNot1Ev.setPreferredSize(new java.awt.Dimension(150, 14));
+        jPanelCrear.add(jLabelCrearNot1Ev);
+        jLabelCrearNot1Ev.setBounds(50, 130, 150, 14);
 
+        jTextFieldCrearNot1Ev.setPreferredSize(new java.awt.Dimension(20, 20));
+        jPanelCrear.add(jTextFieldCrearNot1Ev);
+        jTextFieldCrearNot1Ev.setBounds(220, 120, 300, 30);
+
+        jLabelCrearNot2Ev.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelCrearNot2Ev.setText("Nota segunda evaluación");
+        jLabelCrearNot2Ev.setPreferredSize(new java.awt.Dimension(150, 14));
+        jPanelCrear.add(jLabelCrearNot2Ev);
+        jLabelCrearNot2Ev.setBounds(50, 170, 150, 14);
 
+        jTextFieldCrearNot2Ev.setPreferredSize(new java.awt.Dimension(20, 20));
+        jPanelCrear.add(jTextFieldCrearNot2Ev);
+        jTextFieldCrearNot2Ev.setBounds(220, 160, 300, 30);
+
+        jLabelCrearNotFinal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelCrearNotFinal.setText("Nota final");
+        jLabelCrearNotFinal.setPreferredSize(new java.awt.Dimension(150, 14));
+        jPanelCrear.add(jLabelCrearNotFinal);
+        jLabelCrearNotFinal.setBounds(50, 210, 150, 14);
 
+        jTextFieldCrearNotFinal.setPreferredSize(new java.awt.Dimension(20, 20));
+        jPanelCrear.add(jTextFieldCrearNotFinal);
+        jTextFieldCrearNotFinal.setBounds(220, 200, 300, 30);
+
+        jLabelCrearNotExtra.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelCrearNotExtra.setText("Nota extra");
+        jLabelCrearNotExtra.setPreferredSize(new java.awt.Dimension(150, 14));
+        jPanelCrear.add(jLabelCrearNotExtra);
+        jLabelCrearNotExtra.setBounds(50, 250, 150, 14);
 
-        jButtonCrear.setText("Crear");
+        jTextFieldCrearNotExtra.setPreferredSize(new java.awt.Dimension(20, 20));
+        jPanelCrear.add(jTextFieldCrearNotExtra);
+        jTextFieldCrearNotExtra.setBounds(220, 240, 300, 30);
+
+        jButtonCrear.setText("Crear alumno");
         jButtonCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCrearActionPerformed(evt);
             }
         });
+        jPanelCrear.add(jButtonCrear);
+        jButtonCrear.setBounds(400, 290, 120, 23);
 
         jButtonCrearLimpiar.setText("Limpiar campos");
         jButtonCrearLimpiar.addActionListener(new java.awt.event.ActionListener() {
@@ -139,72 +215,18 @@ public class PrincipalJFrame extends javax.swing.JFrame {
                 jButtonCrearLimpiarActionPerformed(evt);
             }
         });
+        jPanelCrear.add(jButtonCrearLimpiar);
+        jButtonCrearLimpiar.setBounds(220, 290, 130, 23);
 
-        javax.swing.GroupLayout jPanelCrearLayout = new javax.swing.GroupLayout(jPanelCrear);
-        jPanelCrear.setLayout(jPanelCrearLayout);
-        jPanelCrearLayout.setHorizontalGroup(
-            jPanelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelCrearLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabelCrearNombre)
-                    .addComponent(jLabelCrearMatricula)
-                    .addComponent(jLabelCrearNot1Ev)
-                    .addComponent(jLabelCrearNot2Ev)
-                    .addComponent(jLabelCrearNotFinal)
-                    .addComponent(jLabelCrearNotExtra))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldCrearNotExtra, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanelCrearLayout.createSequentialGroup()
-                            .addComponent(jButtonCrearLimpiar)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButtonCrear))
-                        .addComponent(jTextFieldCrearMatricula, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                        .addComponent(jTextFieldCrearNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                        .addComponent(jTextFieldCrearNot1Ev, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                        .addComponent(jTextFieldCrearNot2Ev, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                        .addComponent(jTextFieldCrearNotFinal, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)))
-                .addContainerGap(199, Short.MAX_VALUE))
-        );
-        jPanelCrearLayout.setVerticalGroup(
-            jPanelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelCrearLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelCrearMatricula)
-                    .addComponent(jTextFieldCrearMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelCrearNombre)
-                    .addComponent(jTextFieldCrearNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelCrearNot1Ev)
-                    .addComponent(jTextFieldCrearNot1Ev, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelCrearNot2Ev)
-                    .addComponent(jTextFieldCrearNot2Ev, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelCrearNotFinal)
-                    .addComponent(jTextFieldCrearNotFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldCrearNotExtra, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelCrearNotExtra))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonCrearLimpiar)
-                    .addComponent(jButtonCrear))
-                .addContainerGap(66, Short.MAX_VALUE))
-        );
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Crear un nuevo alumno");
+        jPanelCrear.add(jLabel2);
+        jLabel2.setBounds(10, 10, 580, 20);
 
         jTabbedPaneGeneral.addTab("Crear", jPanelCrear);
 
-        jLabelLeer.setText("Elige nº  matrícula");
+        jPanelLeer.setLayout(null);
 
         jListLeer.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -213,12 +235,17 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         });
         jScrollPaneLeerLista.setViewportView(jListLeer);
 
-        jButtonLeerAniadir.setText("Añadir a tabla");
+        jPanelLeer.add(jScrollPaneLeerLista);
+        jScrollPaneLeerLista.setBounds(30, 100, 100, 190);
+
+        jButtonLeerAniadir.setText("Consultar datos");
         jButtonLeerAniadir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonLeerAniadirActionPerformed(evt);
             }
         });
+        jPanelLeer.add(jButtonLeerAniadir);
+        jButtonLeerAniadir.setBounds(460, 70, 120, 23);
 
         jTableLeerTabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -243,47 +270,33 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jTableLeerTabla.getTableHeader().setReorderingAllowed(false);
         jScrollPaneLeerTabla.setViewportView(jTableLeerTabla);
 
+        jPanelLeer.add(jScrollPaneLeerTabla);
+        jScrollPaneLeerTabla.setBounds(158, 100, 420, 190);
+
         jButtonLeerLimpiarTabla.setText("Limpiar tabla");
         jButtonLeerLimpiarTabla.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonLeerLimpiarTablaActionPerformed(evt);
             }
         });
+        jPanelLeer.add(jButtonLeerLimpiarTabla);
+        jButtonLeerLimpiarTabla.setBounds(460, 300, 120, 23);
 
-        javax.swing.GroupLayout jPanelLeerLayout = new javax.swing.GroupLayout(jPanelLeer);
-        jPanelLeer.setLayout(jPanelLeerLayout);
-        jPanelLeerLayout.setHorizontalGroup(
-            jPanelLeerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelLeerLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelLeerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabelLeer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonLeerAniadir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPaneLeerLista))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelLeerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelLeerLayout.createSequentialGroup()
-                        .addComponent(jButtonLeerLimpiarTabla)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPaneLeerTabla, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanelLeerLayout.setVerticalGroup(
-            jPanelLeerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelLeerLayout.createSequentialGroup()
-                .addGap(9, 9, 9)
-                .addGroup(jPanelLeerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonLeerLimpiarTabla)
-                    .addComponent(jLabelLeer, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelLeerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanelLeerLayout.createSequentialGroup()
-                        .addComponent(jScrollPaneLeerLista, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonLeerAniadir))
-                    .addComponent(jScrollPaneLeerTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jRadioButtonLeerTexto.setText("Insertar una matrícula manualmente");
+        jPanelLeer.add(jRadioButtonLeerTexto);
+        jRadioButtonLeerTexto.setBounds(30, 40, 240, 25);
+
+        jRadioButtonLeerLista.setText("Elegir una matrícula de la lista");
+        jPanelLeer.add(jRadioButtonLeerLista);
+        jRadioButtonLeerLista.setBounds(30, 70, 240, 25);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Consultar datos de uno o varios alumnos por medio de su número de matrícula");
+        jPanelLeer.add(jLabel1);
+        jLabel1.setBounds(10, 10, 580, 20);
+        jPanelLeer.add(jTextFieldLeerManual);
+        jTextFieldLeerManual.setBounds(270, 40, 180, 25);
 
         jTabbedPaneGeneral.addTab("Leer", jPanelLeer);
 
@@ -302,8 +315,18 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jLabelModificarNombre.setText("Nombre y apellidos");
 
         jButtonModificarLimpiar.setText("Limpiar campos");
+        jButtonModificarLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonModificarLimpiarActionPerformed(evt);
+            }
+        });
 
         jButtonModificar.setText("Modificar");
+        jButtonModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonModificarActionPerformed(evt);
+            }
+        });
 
         jLabelModificar.setText("Elige nº  matrícula");
 
@@ -401,6 +424,11 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jLabelBorrar.setText("Elige nº  matrícula");
 
         jButtonBorrarLimpiarTabla.setText("Limpiar tabla");
+        jButtonBorrarLimpiarTabla.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBorrarLimpiarTablaActionPerformed(evt);
+            }
+        });
 
         jListBorrar.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -419,12 +447,31 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTableBorrarTabla.getTableHeader().setReorderingAllowed(false);
         jScrollPaneBorrarTabla.setViewportView(jTableBorrarTabla);
 
         jButtonBorrarAniadirTabla.setText("Añadir a tabla");
+        jButtonBorrarAniadirTabla.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBorrarAniadirTablaActionPerformed(evt);
+            }
+        });
 
         jButtonBorrarRegistros.setText("Borrar registros");
+        jButtonBorrarRegistros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBorrarRegistrosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelBorrarLayout = new javax.swing.GroupLayout(jPanelBorrar);
         jPanelBorrar.setLayout(jPanelBorrarLayout);
@@ -468,14 +515,29 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jLabelGuardarDescartar.setText("Deshacer todos los cambios");
 
         jButtonGuardarDescartar.setText("Aceptar");
+        jButtonGuardarDescartar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGuardarDescartarActionPerformed(evt);
+            }
+        });
 
         jLabelGuardarDescartarSalir.setText("Deshacer todos los cambios y salir");
 
         jButtonGuardarDescartarSalir.setText("Aceptar");
+        jButtonGuardarDescartarSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGuardarDescartarSalirActionPerformed(evt);
+            }
+        });
 
         jLabelGuardarGuardarSalir.setText("Guardar todos los cambios y salir");
 
         jButtonGuardarGuardarSalir.setText("Aceptar");
+        jButtonGuardarGuardarSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGuardarGuardarSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelGuardarLayout = new javax.swing.GroupLayout(jPanelGuardar);
         jPanelGuardar.setLayout(jPanelGuardarLayout);
@@ -540,21 +602,44 @@ public class PrincipalJFrame extends javax.swing.JFrame {
     }
 
     private void agregarDeListaATabla(JList jList, DefaultTableModel dtm) {
+
         List listaMatriculas = jList.getSelectedValuesList();
         for (AlumnoAD a : alumnosAD) {
             if (listaMatriculas.contains(a.getNMatricula())) {
-                dtm.addRow(new Object[]{
-                    a.getNMatricula(),
-                    a.getNombre(),
-                    a.getNot1Ev(),
-                    a.getNota2Ev(),
-                    a.getNotaExtra(),
-                    a.getNotaFinal()}
-                );
-
+                agregarAlumnoATabla(dtm, a);
             }
         }
+    }
 
+    private void agregarAlumnoATabla(DefaultTableModel dtm, AlumnoAD alu) {
+        dtm.addRow(new Object[]{
+            alu.getNMatricula(),
+            alu.getNombre(),
+            alu.getNot1Ev(),
+            alu.getNota2Ev(),
+            alu.getNotaExtra(),
+            alu.getNotaFinal()}
+        );
+    }
+
+    private void agregarDeTextoATabla(JTextField jtf, DefaultTableModel dtm) {
+        boolean encontrado = false;
+        int matricula;
+        if (jtf.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe introducir un número de matrícula.");
+        } else {
+            if (!jtf.getText().matches(regexMatricula)) {
+                JOptionPane.showMessageDialog(null, "La matrícula porporcionada no tiene un formato válido");
+            } else {
+                matricula = parseInt(jtf.getText());
+                for (AlumnoAD a : alumnosAD) {
+                    if (a.getNMatricula() == matricula) {
+                        agregarAlumnoATabla(dtm, a);
+                    }
+                }
+            }
+
+        }
     }
 
     private void limpiarTabla(DefaultTableModel dtm) {
@@ -564,51 +649,118 @@ public class PrincipalJFrame extends javax.swing.JFrame {
     }
 
     private void agregarDeListaACamposModificacion(JList jList) {
-        for (AlumnoAD a : alumnosAD) {
-            if (a.getNMatricula() == (Integer) jList.getSelectedValue()) {
-                jTextFieldModificarMatricula.setText(Integer.toString(a.getNMatricula()));
-                jTextFieldModificarNombre.setText(a.getNombre());
-                jTextFieldModificarNot1Ev.setText(Float.toString(a.getNot1Ev()));
-                jTextFieldModificarNot2Ev.setText(Float.toString(a.getNota2Ev()));
-                jTextFieldModificarNotFinal.setText(Float.toString(a.getNotaFinal()));
-                jTextFieldModificarNotExtra.setText(Float.toString(a.getNotaExtra()));
+        if (jList.getSelectedValue() != null) {
+            for (AlumnoAD a : alumnosAD) {
+                if (a.getNMatricula() == (Integer) jList.getSelectedValue()) {
+                    jTextFieldModificarMatricula.setText(String.valueOf(a.getNMatricula()));
+                    jTextFieldModificarNombre.setText("" + a.getNombre());
+                    jTextFieldModificarNot1Ev.setText("0" + a.getNot1Ev());
+                    jTextFieldModificarNot2Ev.setText("0" + a.getNota2Ev());
+                    jTextFieldModificarNotFinal.setText("0" + a.getNotaFinal());
+                    jTextFieldModificarNotExtra.setText("0" + a.getNotaExtra());
+                }
             }
         }
     }
 
-    private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
-        AlumnoAD aluAD = null;
+    private void modificarAlumno() {
 
-        if (!jTextFieldCrearMatricula.getText().isEmpty()) {
-            try {
-                int nMatr = parseInt(jTextFieldCrearMatricula.getText());
-                String nomb = jTextFieldCrearNombre.getText().isEmpty() ? null : jTextFieldCrearNombre.getText();
-                Float not1ev = jTextFieldCrearNot1Ev.getText().isEmpty() ? null : Float.valueOf(jTextFieldCrearNot1Ev.getText());
-                Float not2ev = jTextFieldCrearNot2Ev.getText().isEmpty() ? null : Float.valueOf(jTextFieldCrearNot2Ev.getText());
-                Float notFin = jTextFieldCrearNotFinal.getText().isEmpty() ? null : Float.valueOf(jTextFieldCrearNotFinal.getText());
-                Float notExt = jTextFieldCrearNotExtra.getText().isEmpty() ? null : Float.valueOf(jTextFieldCrearNotExtra.getText());
-                aluAD = new AlumnoAD(nMatr, nomb, not1ev, not2ev, notFin, notExt);
+        AlumnoAD aluAD = new AlumnoAD();
+        aluAD.setNMatricula(Integer.parseInt(jTextFieldModificarMatricula.getText()));
 
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "El número de matrícula solo admite números enteros.");
+        aluAD.setNombre(jTextFieldCrearNombre.getText());
+
+        if (asignarCamposNotasAAlumno(aluAD, jTextFieldModificarNot1Ev, jTextFieldModificarNot2Ev, jTextFieldModificarNotFinal, jTextFieldModificarNotExtra)) {
+            if (CrudDatos.update(alumnosAD, aluAD)) {
+                JOptionPane.showMessageDialog(null, "El alumno: \n"
+                        + aluAD.toString() + "\nHa sido modificado correctamente");
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Algunos campos contienen"
+                    + " información no válida");
+        }
+    }
+
+    private void crearAlumno() {
+        AlumnoAD aluAD = new AlumnoAD();
+
+        if (!jTextFieldCrearMatricula.getText().isEmpty() && jTextFieldCrearMatricula.getText().matches(regexMatricula)) {
+
+            aluAD.setNMatricula(Integer.parseInt(jTextFieldCrearMatricula.getText()));
+
+            aluAD.setNombre(jTextFieldCrearNombre.getText());
+
+            if (asignarCamposNotasAAlumno(aluAD, jTextFieldCrearNot1Ev, jTextFieldCrearNot2Ev, jTextFieldCrearNotFinal, jTextFieldCrearNotExtra)) {
+                if (CrudDatos.create(alumnosAD, aluAD)) {
+                    JOptionPane.showMessageDialog(null, "El alumno: \n"
+                            + aluAD.toString() + "\nHa sido creado correctamente");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ya existe un alumno con el"
+                            + " número de matrícula: " + aluAD.getNMatricula() + "."
+                            + "\nNo se puede crear el alumno. Pruebe otro número dematrícula.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Algunos campos contienen"
+                        + " información no válida");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Debe introducir al menos el número de matrícula.");
+            JOptionPane.showMessageDialog(null, "Debe elegir un número de matrícula.");
         }
+    }
 
-        if (aluAD != null) {
-            System.out.println(alumnosAD);
-            System.out.println(aluAD);
-            if (CrudDatos.create(alumnosAD, aluAD)) {
-                JOptionPane.showMessageDialog(null, "El alumno: \n"
-                        + aluAD.toString() + "\nHa sido creado correctamente");
-            } else {
-                JOptionPane.showMessageDialog(null, "Ya existe un alumno con el"
-                        + " número de matrícula: " + aluAD.getNMatricula() + "."
-                        + "\nNo se puede crear el alumno. Pruebe otro número dematrícula.");
+    //Auxiliar para tomar los datos del formulario para crear/modificar alumno
+    private boolean asignarCamposNotasAAlumno(AlumnoAD alu, JTextField not1, JTextField not2, JTextField notFi, JTextField notEx) {
+        boolean asignacionCorrecta = true;
+        not1.setBackground(defecto);
+        not2.setBackground(defecto);
+        notFi.setBackground(defecto);
+        notEx.setBackground(defecto);
+
+        if (not1.getText().isEmpty() || not1.getText().matches(regexNotas)) {
+            alu.setNot1Ev(Float.parseFloat("0" + not1.getText()));
+        } else {
+            not1.setBackground(miRojo);
+            asignacionCorrecta = false;
+        }
+        if (not2.getText().isEmpty() || not2.getText().matches(regexNotas)) {
+            alu.setNota2Ev(Float.parseFloat("0" + not2.getText()));
+        } else {
+            not2.setBackground(miRojo);
+            asignacionCorrecta = false;
+        }
+        if (notFi.getText().isEmpty() || notFi.getText().matches(regexNotas)) {
+            alu.setNotaFinal(Float.parseFloat("0" + notFi.getText()));
+        } else {
+            notFi.setBackground(miRojo);
+            asignacionCorrecta = false;
+        }
+        if (notEx.getText().isEmpty() || notEx.getText().matches(regexNotas)) {
+            alu.setNotaExtra(Float.parseFloat("0" + notEx.getText()));
+        } else {
+            notEx.setBackground(miRojo);
+            asignacionCorrecta = false;
+        }
+        return asignacionCorrecta;
+    }
+
+    private void borrarRegistros() {
+        HashSet<Integer> matriculasABorrar = new HashSet<>();
+        for (int i = dtmDelete.getRowCount() - 1; i >= 0; i--) {
+            matriculasABorrar.add((Integer) dtmDelete.getValueAt(i, 0));
+        }
+        for (int i = alumnosAD.size() - 1; i >= 0; i--) {
+            if (matriculasABorrar.contains(alumnosAD.get(i).getNMatricula())) {
+                matriculasABorrar.remove(alumnosAD.get(i).getNMatricula());
+                alumnosAD.remove(alumnosAD.get(i));
+
             }
         }
+        limpiarTabla(dtmDelete);
+    }
 
+    private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
+        crearAlumno();
     }//GEN-LAST:event_jButtonCrearActionPerformed
 
     private void jButtonCrearLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearLimpiarActionPerformed
@@ -618,7 +770,6 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jTextFieldCrearNot2Ev.setText("");
         jTextFieldCrearNotFinal.setText("");
         jTextFieldCrearNotExtra.setText("");
-        Conexion.exportarColecion(alumnosAD);
     }//GEN-LAST:event_jButtonCrearLimpiarActionPerformed
 
     private void jTabbedPaneGeneralStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPaneGeneralStateChanged
@@ -635,6 +786,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
                 actualizarListaMatriculas(dlmUpdate);
                 break;
             case 3:
+                actualizarListaMatriculas(dlmDelete);
                 break;
             case 4:
                 break;
@@ -653,6 +805,46 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         agregarDeListaACamposModificacion(jListModificar);
     }//GEN-LAST:event_jButtonModificarIniciarActionPerformed
 
+    private void jButtonModificarLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarLimpiarActionPerformed
+        jTextFieldModificarMatricula.setText("");
+        jTextFieldModificarNombre.setText("");
+        jTextFieldModificarNot1Ev.setText("");
+        jTextFieldModificarNot2Ev.setText("");
+        jTextFieldModificarNotFinal.setText("");
+        jTextFieldModificarNotExtra.setText("");
+    }//GEN-LAST:event_jButtonModificarLimpiarActionPerformed
+
+    private void jButtonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarActionPerformed
+        modificarAlumno();
+    }//GEN-LAST:event_jButtonModificarActionPerformed
+
+    private void jButtonBorrarAniadirTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarAniadirTablaActionPerformed
+        agregarDeListaATabla(jListBorrar, dtmDelete);
+    }//GEN-LAST:event_jButtonBorrarAniadirTablaActionPerformed
+
+    private void jButtonBorrarLimpiarTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarLimpiarTablaActionPerformed
+        limpiarTabla(dtmDelete);
+    }//GEN-LAST:event_jButtonBorrarLimpiarTablaActionPerformed
+
+    private void jButtonBorrarRegistrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarRegistrosActionPerformed
+        borrarRegistros();
+    }//GEN-LAST:event_jButtonBorrarRegistrosActionPerformed
+
+    private void jButtonGuardarDescartarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarDescartarActionPerformed
+        alumnosAD = Conexion.importarColeccion();
+    }//GEN-LAST:event_jButtonGuardarDescartarActionPerformed
+
+    private void jButtonGuardarDescartarSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarDescartarSalirActionPerformed
+        alumnosAD = null;
+        System.exit(0);
+    }//GEN-LAST:event_jButtonGuardarDescartarSalirActionPerformed
+
+    private void jButtonGuardarGuardarSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarGuardarSalirActionPerformed
+        Conexion.exportarColecion(alumnosAD);
+        System.exit(0);
+
+    }//GEN-LAST:event_jButtonGuardarGuardarSalirActionPerformed
+
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -663,16 +855,24 @@ public class PrincipalJFrame extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PrincipalJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PrincipalJFrame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PrincipalJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PrincipalJFrame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PrincipalJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PrincipalJFrame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PrincipalJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PrincipalJFrame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -698,6 +898,8 @@ public class PrincipalJFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButtonModificar;
     private javax.swing.JButton jButtonModificarIniciar;
     private javax.swing.JButton jButtonModificarLimpiar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelBorrar;
     private javax.swing.JLabel jLabelCrearMatricula;
     private javax.swing.JLabel jLabelCrearNombre;
@@ -708,7 +910,6 @@ public class PrincipalJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelGuardarDescartar;
     private javax.swing.JLabel jLabelGuardarDescartarSalir;
     private javax.swing.JLabel jLabelGuardarGuardarSalir;
-    private javax.swing.JLabel jLabelLeer;
     private javax.swing.JLabel jLabelModificar;
     private javax.swing.JLabel jLabelModificarMatricula;
     private javax.swing.JLabel jLabelModificarNombre;
@@ -724,6 +925,8 @@ public class PrincipalJFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelCrear;
     private javax.swing.JPanel jPanelGuardar;
     private javax.swing.JPanel jPanelLeer;
+    private javax.swing.JRadioButton jRadioButtonLeerLista;
+    private javax.swing.JRadioButton jRadioButtonLeerTexto;
     private javax.swing.JScrollPane jScrollPaneBorrarLista;
     private javax.swing.JScrollPane jScrollPaneBorrarTabla;
     private javax.swing.JScrollPane jScrollPaneLeerLista;
@@ -738,6 +941,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldCrearNot2Ev;
     private javax.swing.JTextField jTextFieldCrearNotExtra;
     private javax.swing.JTextField jTextFieldCrearNotFinal;
+    private javax.swing.JTextField jTextFieldLeerManual;
     private javax.swing.JTextField jTextFieldModificarMatricula;
     private javax.swing.JTextField jTextFieldModificarNombre;
     private javax.swing.JTextField jTextFieldModificarNot1Ev;

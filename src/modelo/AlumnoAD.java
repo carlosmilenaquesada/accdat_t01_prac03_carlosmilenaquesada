@@ -8,7 +8,7 @@ public class AlumnoAD implements Serializable {
     //--------------------------------------------------------------------------
     private int nMatricula;
     private String nombre;
-    private Float not1Ev, nota2Ev, notaFinal, notaExtra;
+    private float not1Ev, nota2Ev, notaFinal, notaExtra;
 
     //CONSTRUCTORES
     //--------------------------------------------------------------------------
@@ -20,8 +20,8 @@ public class AlumnoAD implements Serializable {
     }
 
     //Por parámetros
-    public AlumnoAD(int nMatricula, String nombre, Float not1Ev, Float nota2Ev,
-            Float notaFinal, Float notaExtra) {
+    public AlumnoAD(int nMatricula, String nombre, float not1Ev, float nota2Ev,
+            float notaFinal, float notaExtra) {
         this.nMatricula = nMatricula;
         this.nombre = nombre;
         this.not1Ev = not1Ev;
@@ -40,19 +40,19 @@ public class AlumnoAD implements Serializable {
         this.nombre = nombre;
     }
 
-    public void setNot1Ev(Float not1Ev) {
+    public void setNot1Ev(float not1Ev) {
         this.not1Ev = not1Ev;
     }
 
-    public void setNota2Ev(Float nota2Ev) {
+    public void setNota2Ev(float nota2Ev) {
         this.nota2Ev = nota2Ev;
     }
 
-    public void setNotaFinal(Float notaFinal) {
+    public void setNotaFinal(float notaFinal) {
         this.notaFinal = notaFinal;
     }
 
-    public void setNotaExtra(Float notaExtra) {
+    public void setNotaExtra(float notaExtra) {
         this.notaExtra = notaExtra;
     }
 
@@ -66,19 +66,19 @@ public class AlumnoAD implements Serializable {
         return this.nombre;
     }
 
-    public Float getNot1Ev() {
+    public float getNot1Ev() {
         return this.not1Ev;
     }
 
-    public Float getNota2Ev() {
+    public float getNota2Ev() {
         return this.nota2Ev;
     }
 
-    public Float getNotaFinal() {
+    public float getNotaFinal() {
         return this.notaFinal;
     }
 
-    public Float getNotaExtra() {
+    public float getNotaExtra() {
         return this.notaExtra;
     }
 

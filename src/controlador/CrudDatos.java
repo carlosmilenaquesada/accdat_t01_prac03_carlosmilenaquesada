@@ -28,7 +28,7 @@ public class CrudDatos {
         return alumnoAD;
     }
 
-    public static void update(ArrayList<AlumnoAD> lista, AlumnoAD alumnoAD) {
+    public static boolean update(ArrayList<AlumnoAD> lista, AlumnoAD alumnoAD) {
 
         boolean encontrado = false;
 
@@ -42,6 +42,7 @@ public class CrudDatos {
                 encontrado = true;
             }
         }
+        return encontrado;
     }
 
     public static void delete(ArrayList<AlumnoAD> lista, int idElemento) {

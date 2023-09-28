@@ -2,14 +2,12 @@ package controlador;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 import modelo.AlumnoAD;
 
@@ -21,24 +19,30 @@ public class Conexion {
     }
 
     public static ArrayList<AlumnoAD> importarColeccion() {
-        ArrayList<AlumnoAD> coleccion = new ArrayList<>();
+        ArrayList<AlumnoAD> coleccion = null;
         FileInputStream fis = null;
         ObjectInputStream ois = null;
 
-        if (FILE.exists() && FILE.isFile()) {
-
-            try {
+        try {
+            if (FILE.exists() && FILE.isFile()) {
                 fis = new FileInputStream(FILE);
                 ois = new ObjectInputStream(fis);
                 coleccion = (ArrayList<AlumnoAD>) ois.readObject();
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
             }
-
+        } catch (SecurityException ex) {
+            JOptionPane.showMessageDialog(null, "No tiene permisos para manipular el fichero."
+                    + "Se cerrará el programa.");
+            System.exit(0);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Fichero no econtrado o ilegible."
+                    + "No se pueden los cargar datos.");
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Fichero ilegible."
+                    + "No se pueden los cargar datos.");
+        } finally {
+            if (coleccion == null) {
+                coleccion = new ArrayList<>();
+            }
             try {
                 if (ois != null) {
                     ois.close();
@@ -47,9 +51,9 @@ public class Conexion {
                     fis.close();
                 }
             } catch (IOException ex) {
-                System.out.println(ex);
+                JOptionPane.showMessageDialog(null, "Ocurrió un problema."
+                        + "\nEs posible que los datos no se carguen correctamente");
             }
-
         }
         return coleccion;
     }
@@ -57,29 +61,30 @@ public class Conexion {
     public static void exportarColecion(ArrayList<AlumnoAD> coleccionModificada) {
         FileOutputStream fos = null;
         ObjectOutputStream oos = null;
-        if ((FILE.exists() && FILE.isFile()) || !FILE.exists()) {
-            try {
+        try {
+            if ((FILE.exists() && FILE.isFile()) || !FILE.exists()) {
                 fos = new FileOutputStream(FILE);
                 oos = new ObjectOutputStream(fos);
                 oos.writeObject(coleccionModificada);
+            }
 
-            } catch (FileNotFoundException ex) {
-                System.out.println(ex);
-            } catch (IOException ex) {
-                System.out.println(ex);
-            } catch (Exception ex) {
-                System.out.println(ex);
-            } finally {
-                try {
-                    if (oos != null) {
-                        oos.close();
-                    }
-                    if (fos != null) {
-                        fos.close();
-                    }
-                } catch (IOException ex) {
-                    System.out.println(ex);
+        } catch (SecurityException ex) {
+            JOptionPane.showMessageDialog(null, "No tiene permisos para manipular el fichero."
+                    + "\nSe perderá la información guardada.");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Fichero innaccesible."
+                    + "\nSe perderá la información guardada.");
+        } finally {
+            try {
+                if (oos != null) {
+                    oos.close();
                 }
+                if (fos != null) {
+                    fos.close();
+                }
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Ocurrió un problema."
+                        + "\nEs posible que los datos no se guarden correctamente");
             }
         }
     }
