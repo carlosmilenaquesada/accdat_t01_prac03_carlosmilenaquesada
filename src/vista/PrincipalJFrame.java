@@ -47,10 +47,12 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             "Nº Matricula", "Nombre Alumno", "Nota 1ª Ev.", "Nota 2ª Ev.", "Nota final", "Nota extra"
         });
         jTableLeerTabla.setModel(dtmRead);
+        jRadioButtonLeerManual.setSelected(true);
 
         //ELEMENTOS PESTAÑA UPDATE
         dlmUpdate = new DefaultListModel();
         jListModificar.setModel(dlmUpdate);
+        jRadioButtonActuManual.setSelected(true);
 
         //ELEMENTOS DE LA PESTAÑA BORRAR
         dlmDelete = new DefaultListModel();
@@ -60,12 +62,17 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             "Nº Matricula", "Nombre Alumno", "Nota 1ª Ev.", "Nota 2ª Ev.", "Nota final", "Nota extra"
         });
         jTableBorrarTabla.setModel(dtmDelete);
+        jRadioButtonBorrarManual.setSelected(true);
+
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroupLeer = new javax.swing.ButtonGroup();
+        buttonGroupActualizar = new javax.swing.ButtonGroup();
+        buttonGroupBorrar = new javax.swing.ButtonGroup();
         jTabbedPaneGeneral = new javax.swing.JTabbedPane();
         jPanelCrear = new javax.swing.JPanel();
         jLabelCrearMatricula = new javax.swing.JLabel();
@@ -90,7 +97,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jScrollPaneLeerTabla = new javax.swing.JScrollPane();
         jTableLeerTabla = new javax.swing.JTable();
         jButtonLeerLimpiarTabla = new javax.swing.JButton();
-        jRadioButtonLeerTexto = new javax.swing.JRadioButton();
+        jRadioButtonLeerManual = new javax.swing.JRadioButton();
         jRadioButtonLeerLista = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
         jTextFieldLeerManual = new javax.swing.JTextField();
@@ -113,8 +120,9 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jScrollPaneModificarLista = new javax.swing.JScrollPane();
         jListModificar = new javax.swing.JList<>();
         jButtonModificarIniciar = new javax.swing.JButton();
+        jRadioButtonActuManual = new javax.swing.JRadioButton();
+        jRadioButtonActuLista = new javax.swing.JRadioButton();
         jPanelBorrar = new javax.swing.JPanel();
-        jLabelBorrar = new javax.swing.JLabel();
         jButtonBorrarLimpiarTabla = new javax.swing.JButton();
         jScrollPaneBorrarLista = new javax.swing.JScrollPane();
         jListBorrar = new javax.swing.JList<>();
@@ -122,6 +130,9 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jTableBorrarTabla = new javax.swing.JTable();
         jButtonBorrarAniadirTabla = new javax.swing.JButton();
         jButtonBorrarRegistros = new javax.swing.JButton();
+        jRadioButtonBorrarLista = new javax.swing.JRadioButton();
+        jRadioButtonBorrarManual = new javax.swing.JRadioButton();
+        jTextFieldBorrarManual = new javax.swing.JTextField();
         jPanelGuardar = new javax.swing.JPanel();
         jLabelGuardarDescartar = new javax.swing.JLabel();
         jButtonGuardarDescartar = new javax.swing.JButton();
@@ -236,7 +247,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jScrollPaneLeerLista.setViewportView(jListLeer);
 
         jPanelLeer.add(jScrollPaneLeerLista);
-        jScrollPaneLeerLista.setBounds(30, 100, 100, 190);
+        jScrollPaneLeerLista.setBounds(30, 60, 100, 230);
 
         jButtonLeerAniadir.setText("Consultar datos");
         jButtonLeerAniadir.addActionListener(new java.awt.event.ActionListener() {
@@ -280,15 +291,27 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             }
         });
         jPanelLeer.add(jButtonLeerLimpiarTabla);
-        jButtonLeerLimpiarTabla.setBounds(460, 300, 120, 23);
+        jButtonLeerLimpiarTabla.setBounds(160, 300, 120, 23);
 
-        jRadioButtonLeerTexto.setText("Insertar una matrícula manualmente");
-        jPanelLeer.add(jRadioButtonLeerTexto);
-        jRadioButtonLeerTexto.setBounds(30, 40, 240, 25);
+        buttonGroupLeer.add(jRadioButtonLeerManual);
+        jRadioButtonLeerManual.setText("Insertar una matrícula manualmente");
+        jRadioButtonLeerManual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonLeerManualActionPerformed(evt);
+            }
+        });
+        jPanelLeer.add(jRadioButtonLeerManual);
+        jRadioButtonLeerManual.setBounds(230, 30, 240, 25);
 
+        buttonGroupLeer.add(jRadioButtonLeerLista);
         jRadioButtonLeerLista.setText("Elegir una matrícula de la lista");
+        jRadioButtonLeerLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonLeerListaActionPerformed(evt);
+            }
+        });
         jPanelLeer.add(jRadioButtonLeerLista);
-        jRadioButtonLeerLista.setBounds(30, 70, 240, 25);
+        jRadioButtonLeerLista.setBounds(30, 30, 240, 25);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -296,23 +319,47 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jPanelLeer.add(jLabel1);
         jLabel1.setBounds(10, 10, 580, 20);
         jPanelLeer.add(jTextFieldLeerManual);
-        jTextFieldLeerManual.setBounds(270, 40, 180, 25);
+        jTextFieldLeerManual.setBounds(240, 60, 180, 25);
 
         jTabbedPaneGeneral.addTab("Leer", jPanelLeer);
 
-        jLabelModificarMatricula.setText("Número de matrícula");
+        jPanelActualizar.setLayout(null);
 
-        jTextFieldModificarMatricula.setEditable(false);
+        jLabelModificarMatricula.setText("Número de matrícula");
+        jPanelActualizar.add(jLabelModificarMatricula);
+        jLabelModificarMatricula.setBounds(33, 69, 98, 14);
+        jPanelActualizar.add(jTextFieldModificarMatricula);
+        jTextFieldModificarMatricula.setBounds(149, 66, 250, 20);
+        jPanelActualizar.add(jTextFieldModificarNombre);
+        jTextFieldModificarNombre.setBounds(149, 104, 250, 20);
+        jPanelActualizar.add(jTextFieldModificarNot1Ev);
+        jTextFieldModificarNot1Ev.setBounds(149, 142, 250, 20);
+        jPanelActualizar.add(jTextFieldModificarNot2Ev);
+        jTextFieldModificarNot2Ev.setBounds(149, 180, 250, 20);
+        jPanelActualizar.add(jTextFieldModificarNotFinal);
+        jTextFieldModificarNotFinal.setBounds(149, 218, 250, 20);
+        jPanelActualizar.add(jTextFieldModificarNotExtra);
+        jTextFieldModificarNotExtra.setBounds(149, 256, 250, 20);
 
         jLabelModificarNotExtra.setText("Nota extra");
+        jPanelActualizar.add(jLabelModificarNotExtra);
+        jLabelModificarNotExtra.setBounds(79, 259, 52, 14);
 
         jLabelModificarNotFinal.setText("Nota final");
+        jPanelActualizar.add(jLabelModificarNotFinal);
+        jLabelModificarNotFinal.setBounds(85, 221, 46, 14);
 
         jLabelModificarNot2Ev.setText("Nota segunda evaluación");
+        jPanelActualizar.add(jLabelModificarNot2Ev);
+        jLabelModificarNot2Ev.setBounds(10, 183, 121, 14);
 
         jLabelModificarNot1Ev.setText("Nota primera evaluación");
+        jPanelActualizar.add(jLabelModificarNot1Ev);
+        jLabelModificarNot1Ev.setBounds(15, 145, 116, 14);
 
         jLabelModificarNombre.setText("Nombre y apellidos");
+        jPanelActualizar.add(jLabelModificarNombre);
+        jLabelModificarNombre.setBounds(41, 107, 90, 14);
 
         jButtonModificarLimpiar.setText("Limpiar campos");
         jButtonModificarLimpiar.addActionListener(new java.awt.event.ActionListener() {
@@ -320,6 +367,8 @@ public class PrincipalJFrame extends javax.swing.JFrame {
                 jButtonModificarLimpiarActionPerformed(evt);
             }
         });
+        jPanelActualizar.add(jButtonModificarLimpiar);
+        jButtonModificarLimpiar.setBounds(149, 294, 105, 23);
 
         jButtonModificar.setText("Modificar");
         jButtonModificar.addActionListener(new java.awt.event.ActionListener() {
@@ -327,8 +376,12 @@ public class PrincipalJFrame extends javax.swing.JFrame {
                 jButtonModificarActionPerformed(evt);
             }
         });
+        jPanelActualizar.add(jButtonModificar);
+        jButtonModificar.setBounds(324, 294, 75, 23);
 
         jLabelModificar.setText("Elige nº  matrícula");
+        jPanelActualizar.add(jLabelModificar);
+        jLabelModificar.setBounds(417, 11, 123, 19);
 
         jListModificar.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -338,90 +391,41 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jListModificar.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPaneModificarLista.setViewportView(jListModificar);
 
+        jPanelActualizar.add(jScrollPaneModificarLista);
+        jScrollPaneModificarLista.setBounds(417, 35, 123, 185);
+
         jButtonModificarIniciar.setText("Iniciar modificación");
         jButtonModificarIniciar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonModificarIniciarActionPerformed(evt);
             }
         });
+        jPanelActualizar.add(jButtonModificarIniciar);
+        jButtonModificarIniciar.setBounds(417, 238, 123, 23);
 
-        javax.swing.GroupLayout jPanelActualizarLayout = new javax.swing.GroupLayout(jPanelActualizar);
-        jPanelActualizar.setLayout(jPanelActualizarLayout);
-        jPanelActualizarLayout.setHorizontalGroup(
-            jPanelActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelActualizarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabelModificarNombre)
-                    .addComponent(jLabelModificarMatricula)
-                    .addComponent(jLabelModificarNot1Ev)
-                    .addComponent(jLabelModificarNot2Ev)
-                    .addComponent(jLabelModificarNotFinal)
-                    .addComponent(jLabelModificarNotExtra))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextFieldModificarMatricula, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                    .addComponent(jTextFieldModificarNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                    .addComponent(jTextFieldModificarNot1Ev, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                    .addComponent(jTextFieldModificarNot2Ev, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                    .addComponent(jTextFieldModificarNotFinal, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                    .addComponent(jTextFieldModificarNotExtra, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelActualizarLayout.createSequentialGroup()
-                        .addComponent(jButtonModificarLimpiar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonModificar)))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPaneModificarLista, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonModificarIniciar))
-                .addContainerGap(58, Short.MAX_VALUE))
-        );
-        jPanelActualizarLayout.setVerticalGroup(
-            jPanelActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelActualizarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelModificarMatricula)
-                    .addComponent(jTextFieldModificarMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanelActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelActualizarLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanelActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelModificarNombre)
-                            .addComponent(jTextFieldModificarNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanelActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelModificarNot1Ev)
-                            .addComponent(jTextFieldModificarNot1Ev, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanelActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelModificarNot2Ev)
-                            .addComponent(jTextFieldModificarNot2Ev, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanelActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelModificarNotFinal)
-                            .addComponent(jTextFieldModificarNotFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanelActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextFieldModificarNotExtra, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelModificarNotExtra)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelActualizarLayout.createSequentialGroup()
-                        .addGap(5, 5, 5)
-                        .addComponent(jScrollPaneModificarLista, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButtonModificarIniciar)
-                        .addComponent(jButtonModificar))
-                    .addComponent(jButtonModificarLimpiar))
-                .addContainerGap(66, Short.MAX_VALUE))
-        );
+        buttonGroupActualizar.add(jRadioButtonActuManual);
+        jRadioButtonActuManual.setText("Insertar una matrícula manualmente");
+        jRadioButtonActuManual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonActuManualActionPerformed(evt);
+            }
+        });
+        jPanelActualizar.add(jRadioButtonActuManual);
+        jRadioButtonActuManual.setBounds(40, 20, 199, 23);
+
+        buttonGroupActualizar.add(jRadioButtonActuLista);
+        jRadioButtonActuLista.setText("Elegir una matrícula de la lista");
+        jRadioButtonActuLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonActuListaActionPerformed(evt);
+            }
+        });
+        jPanelActualizar.add(jRadioButtonActuLista);
+        jRadioButtonActuLista.setBounds(180, 20, 167, 23);
 
         jTabbedPaneGeneral.addTab("Actualizar", jPanelActualizar);
 
-        jLabelBorrar.setText("Elige nº  matrícula");
+        jPanelBorrar.setLayout(null);
 
         jButtonBorrarLimpiarTabla.setText("Limpiar tabla");
         jButtonBorrarLimpiarTabla.addActionListener(new java.awt.event.ActionListener() {
@@ -429,6 +433,8 @@ public class PrincipalJFrame extends javax.swing.JFrame {
                 jButtonBorrarLimpiarTablaActionPerformed(evt);
             }
         });
+        jPanelBorrar.add(jButtonBorrarLimpiarTabla);
+        jButtonBorrarLimpiarTabla.setBounds(140, 300, 93, 23);
 
         jListBorrar.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -436,6 +442,9 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             public String getElementAt(int i) { return strings[i]; }
         });
         jScrollPaneBorrarLista.setViewportView(jListBorrar);
+
+        jPanelBorrar.add(jScrollPaneBorrarLista);
+        jScrollPaneBorrarLista.setBounds(10, 98, 99, 190);
 
         jTableBorrarTabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -459,12 +468,17 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jTableBorrarTabla.getTableHeader().setReorderingAllowed(false);
         jScrollPaneBorrarTabla.setViewportView(jTableBorrarTabla);
 
+        jPanelBorrar.add(jScrollPaneBorrarTabla);
+        jScrollPaneBorrarTabla.setBounds(127, 98, 461, 190);
+
         jButtonBorrarAniadirTabla.setText("Añadir a tabla");
         jButtonBorrarAniadirTabla.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonBorrarAniadirTablaActionPerformed(evt);
             }
         });
+        jPanelBorrar.add(jButtonBorrarAniadirTabla);
+        jButtonBorrarAniadirTabla.setBounds(470, 40, 99, 23);
 
         jButtonBorrarRegistros.setText("Borrar registros");
         jButtonBorrarRegistros.addActionListener(new java.awt.event.ActionListener() {
@@ -472,43 +486,30 @@ public class PrincipalJFrame extends javax.swing.JFrame {
                 jButtonBorrarRegistrosActionPerformed(evt);
             }
         });
+        jPanelBorrar.add(jButtonBorrarRegistros);
+        jButtonBorrarRegistros.setBounds(470, 300, 107, 23);
 
-        javax.swing.GroupLayout jPanelBorrarLayout = new javax.swing.GroupLayout(jPanelBorrar);
-        jPanelBorrar.setLayout(jPanelBorrarLayout);
-        jPanelBorrarLayout.setHorizontalGroup(
-            jPanelBorrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBorrarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelBorrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabelBorrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonBorrarAniadirTabla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPaneBorrarLista))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelBorrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelBorrarLayout.createSequentialGroup()
-                        .addComponent(jButtonBorrarLimpiarTabla)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonBorrarRegistros))
-                    .addComponent(jScrollPaneBorrarTabla, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanelBorrarLayout.setVerticalGroup(
-            jPanelBorrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBorrarLayout.createSequentialGroup()
-                .addGap(9, 9, 9)
-                .addGroup(jPanelBorrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonBorrarLimpiarTabla)
-                    .addComponent(jButtonBorrarRegistros)
-                    .addComponent(jLabelBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelBorrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelBorrarLayout.createSequentialGroup()
-                        .addComponent(jScrollPaneBorrarLista, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonBorrarAniadirTabla))
-                    .addComponent(jScrollPaneBorrarTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        buttonGroupBorrar.add(jRadioButtonBorrarLista);
+        jRadioButtonBorrarLista.setText("Elegir una matrícula de la lista");
+        jRadioButtonBorrarLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonBorrarListaActionPerformed(evt);
+            }
+        });
+        jPanelBorrar.add(jRadioButtonBorrarLista);
+        jRadioButtonBorrarLista.setBounds(10, 30, 167, 23);
+
+        buttonGroupBorrar.add(jRadioButtonBorrarManual);
+        jRadioButtonBorrarManual.setText("Insertar una matrícula manualmente");
+        jRadioButtonBorrarManual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonBorrarManualActionPerformed(evt);
+            }
+        });
+        jPanelBorrar.add(jRadioButtonBorrarManual);
+        jRadioButtonBorrarManual.setBounds(260, 30, 199, 23);
+        jPanelBorrar.add(jTextFieldBorrarManual);
+        jTextFieldBorrarManual.setBounds(280, 60, 7, 20);
 
         jTabbedPaneGeneral.addTab("Borrar", jPanelBorrar);
 
@@ -601,16 +602,6 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         }
     }
 
-    private void agregarDeListaATabla(JList jList, DefaultTableModel dtm) {
-
-        List listaMatriculas = jList.getSelectedValuesList();
-        for (AlumnoAD a : alumnosAD) {
-            if (listaMatriculas.contains(a.getNMatricula())) {
-                agregarAlumnoATabla(dtm, a);
-            }
-        }
-    }
-
     private void agregarAlumnoATabla(DefaultTableModel dtm, AlumnoAD alu) {
         dtm.addRow(new Object[]{
             alu.getNMatricula(),
@@ -622,6 +613,19 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         );
     }
 
+    private void agregarDeListaATabla(JList jList, DefaultTableModel dtm) {
+        List listaMatriculas = jList.getSelectedValuesList();
+        if (listaMatriculas.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar uno o varios elementos de la lista");
+        } else {
+            for (AlumnoAD a : alumnosAD) {
+                if (listaMatriculas.contains(a.getNMatricula())) {
+                    agregarAlumnoATabla(dtm, a);
+                }
+            }
+        }
+    }
+
     private void agregarDeTextoATabla(JTextField jtf, DefaultTableModel dtm) {
         boolean encontrado = false;
         int matricula;
@@ -629,16 +633,26 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Debe introducir un número de matrícula.");
         } else {
             if (!jtf.getText().matches(regexMatricula)) {
-                JOptionPane.showMessageDialog(null, "La matrícula porporcionada no tiene un formato válido");
+                JOptionPane.showMessageDialog(null, "La matrícula porporcionada no tiene un formato válido.");
             } else {
                 matricula = parseInt(jtf.getText());
                 for (AlumnoAD a : alumnosAD) {
                     if (a.getNMatricula() == matricula) {
                         agregarAlumnoATabla(dtm, a);
+                        encontrado = true;
                     }
+                }
+                if (encontrado == false) {
+                    JOptionPane.showMessageDialog(null, "No hay ningún registro de alumno con esa matrícula.");
                 }
             }
 
+        }
+    }
+
+    private void limpiarVariosJTextFields(ArrayList<JTextField> listaTextFields) {
+        for (JTextField t : listaTextFields) {
+            t.setText("");
         }
     }
 
@@ -759,6 +773,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         limpiarTabla(dtmDelete);
     }
 
+
     private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
         crearAlumno();
     }//GEN-LAST:event_jButtonCrearActionPerformed
@@ -780,10 +795,23 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             case 0:
                 break;
             case 1:
-                actualizarListaMatriculas(dlmRead);
+                jTextFieldLeerManual.setVisible(true);
+                jListLeer.setVisible(false);
                 break;
             case 2:
-                actualizarListaMatriculas(dlmUpdate);
+                jRadioButtonActuManual.setSelected(true);
+                jTextFieldModificarMatricula.setEditable(true);                
+                limpiarVariosJTextFields(new ArrayList<JTextField>() {
+                    {
+                        add(jTextFieldModificarMatricula);
+                        add(jTextFieldModificarNombre);
+                        add(jTextFieldModificarNot1Ev);
+                        add(jTextFieldModificarNot2Ev);
+                        add(jTextFieldModificarNotFinal);
+                        add(jTextFieldModificarNotExtra);
+                    }
+                });
+                jListModificar.setVisible(false);
                 break;
             case 3:
                 actualizarListaMatriculas(dlmDelete);
@@ -794,7 +822,11 @@ public class PrincipalJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jTabbedPaneGeneralStateChanged
 
     private void jButtonLeerAniadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLeerAniadirActionPerformed
-        agregarDeListaATabla(jListLeer, dtmRead);
+        if (jRadioButtonLeerManual.isSelected()) {
+            agregarDeTextoATabla(jTextFieldLeerManual, dtmRead);
+        } else {
+            agregarDeListaATabla(jListLeer, dtmRead);
+        }
     }//GEN-LAST:event_jButtonLeerAniadirActionPerformed
 
     private void jButtonLeerLimpiarTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLeerLimpiarTablaActionPerformed
@@ -802,6 +834,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonLeerLimpiarTablaActionPerformed
 
     private void jButtonModificarIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarIniciarActionPerformed
+        
         agregarDeListaACamposModificacion(jListModificar);
     }//GEN-LAST:event_jButtonModificarIniciarActionPerformed
 
@@ -845,6 +878,58 @@ public class PrincipalJFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButtonGuardarGuardarSalirActionPerformed
 
+    private void jRadioButtonLeerManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonLeerManualActionPerformed
+        jTextFieldLeerManual.setVisible(true);
+        jTextFieldLeerManual.setText("");
+        jListLeer.setVisible(false);
+    }//GEN-LAST:event_jRadioButtonLeerManualActionPerformed
+
+    private void jRadioButtonLeerListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonLeerListaActionPerformed
+        jListLeer.setVisible(true);
+        actualizarListaMatriculas(dlmRead);
+        jTextFieldLeerManual.setVisible(false);
+    }//GEN-LAST:event_jRadioButtonLeerListaActionPerformed
+
+    private void jRadioButtonActuManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonActuManualActionPerformed
+        jTextFieldModificarMatricula.setEditable(true);
+        limpiarVariosJTextFields(new ArrayList<JTextField>() {
+            {
+                add(jTextFieldModificarMatricula);
+                add(jTextFieldModificarNombre);
+                add(jTextFieldModificarNot1Ev);
+                add(jTextFieldModificarNot2Ev);
+                add(jTextFieldModificarNotFinal);
+                add(jTextFieldModificarNotExtra);
+            }
+        });
+        jListModificar.setVisible(false);
+
+    }//GEN-LAST:event_jRadioButtonActuManualActionPerformed
+
+    private void jRadioButtonActuListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonActuListaActionPerformed
+        jTextFieldModificarMatricula.setEditable(false);
+        limpiarVariosJTextFields(new ArrayList<JTextField>() {
+            {
+                add(jTextFieldModificarMatricula);
+                add(jTextFieldModificarNombre);
+                add(jTextFieldModificarNot1Ev);
+                add(jTextFieldModificarNot2Ev);
+                add(jTextFieldModificarNotFinal);
+                add(jTextFieldModificarNotExtra);
+            }
+        });
+        actualizarListaMatriculas(dlmUpdate);
+        jListModificar.setVisible(true);
+    }//GEN-LAST:event_jRadioButtonActuListaActionPerformed
+
+    private void jRadioButtonBorrarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonBorrarListaActionPerformed
+        
+    }//GEN-LAST:event_jRadioButtonBorrarListaActionPerformed
+
+    private void jRadioButtonBorrarManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonBorrarManualActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButtonBorrarManualActionPerformed
+
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -885,6 +970,9 @@ public class PrincipalJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroupActualizar;
+    private javax.swing.ButtonGroup buttonGroupBorrar;
+    private javax.swing.ButtonGroup buttonGroupLeer;
     private javax.swing.JButton jButtonBorrarAniadirTabla;
     private javax.swing.JButton jButtonBorrarLimpiarTabla;
     private javax.swing.JButton jButtonBorrarRegistros;
@@ -900,7 +988,6 @@ public class PrincipalJFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButtonModificarLimpiar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabelBorrar;
     private javax.swing.JLabel jLabelCrearMatricula;
     private javax.swing.JLabel jLabelCrearNombre;
     private javax.swing.JLabel jLabelCrearNot1Ev;
@@ -925,8 +1012,12 @@ public class PrincipalJFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelCrear;
     private javax.swing.JPanel jPanelGuardar;
     private javax.swing.JPanel jPanelLeer;
+    private javax.swing.JRadioButton jRadioButtonActuLista;
+    private javax.swing.JRadioButton jRadioButtonActuManual;
+    private javax.swing.JRadioButton jRadioButtonBorrarLista;
+    private javax.swing.JRadioButton jRadioButtonBorrarManual;
     private javax.swing.JRadioButton jRadioButtonLeerLista;
-    private javax.swing.JRadioButton jRadioButtonLeerTexto;
+    private javax.swing.JRadioButton jRadioButtonLeerManual;
     private javax.swing.JScrollPane jScrollPaneBorrarLista;
     private javax.swing.JScrollPane jScrollPaneBorrarTabla;
     private javax.swing.JScrollPane jScrollPaneLeerLista;
@@ -935,6 +1026,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPaneGeneral;
     private javax.swing.JTable jTableBorrarTabla;
     private javax.swing.JTable jTableLeerTabla;
+    private javax.swing.JTextField jTextFieldBorrarManual;
     private javax.swing.JTextField jTextFieldCrearMatricula;
     private javax.swing.JTextField jTextFieldCrearNombre;
     private javax.swing.JTextField jTextFieldCrearNot1Ev;
