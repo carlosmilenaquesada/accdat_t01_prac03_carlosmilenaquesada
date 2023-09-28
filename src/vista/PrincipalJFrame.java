@@ -89,7 +89,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jTextFieldCrearNotExtra = new javax.swing.JTextField();
         jButtonCrear = new javax.swing.JButton();
         jButtonCrearLimpiar = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        jLabelTituloCrear = new javax.swing.JLabel();
         jPanelLeer = new javax.swing.JPanel();
         jScrollPaneLeerLista = new javax.swing.JScrollPane();
         jListLeer = new javax.swing.JList<>();
@@ -99,7 +99,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jButtonLeerLimpiarTabla = new javax.swing.JButton();
         jRadioButtonLeerManual = new javax.swing.JRadioButton();
         jRadioButtonLeerLista = new javax.swing.JRadioButton();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelTituloLeer = new javax.swing.JLabel();
         jTextFieldLeerManual = new javax.swing.JTextField();
         jPanelActualizar = new javax.swing.JPanel();
         jLabelModificarMatricula = new javax.swing.JLabel();
@@ -116,12 +116,12 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jLabelModificarNombre = new javax.swing.JLabel();
         jButtonModificarLimpiar = new javax.swing.JButton();
         jButtonModificar = new javax.swing.JButton();
-        jLabelModificar = new javax.swing.JLabel();
         jScrollPaneModificarLista = new javax.swing.JScrollPane();
         jListModificar = new javax.swing.JList<>();
         jButtonModificarIniciar = new javax.swing.JButton();
         jRadioButtonActuManual = new javax.swing.JRadioButton();
         jRadioButtonActuLista = new javax.swing.JRadioButton();
+        jLabelTituloActualizar = new javax.swing.JLabel();
         jPanelBorrar = new javax.swing.JPanel();
         jButtonBorrarLimpiarTabla = new javax.swing.JButton();
         jScrollPaneBorrarLista = new javax.swing.JScrollPane();
@@ -133,6 +133,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jRadioButtonBorrarLista = new javax.swing.JRadioButton();
         jRadioButtonBorrarManual = new javax.swing.JRadioButton();
         jTextFieldBorrarManual = new javax.swing.JTextField();
+        jLabelTituloActualizar1 = new javax.swing.JLabel();
         jPanelGuardar = new javax.swing.JPanel();
         jLabelGuardarDescartar = new javax.swing.JLabel();
         jButtonGuardarDescartar = new javax.swing.JButton();
@@ -142,6 +143,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jButtonGuardarGuardarSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(700, 500));
 
         jTabbedPaneGeneral.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -229,11 +231,11 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jPanelCrear.add(jButtonCrearLimpiar);
         jButtonCrearLimpiar.setBounds(220, 290, 130, 23);
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Crear un nuevo alumno");
-        jPanelCrear.add(jLabel2);
-        jLabel2.setBounds(10, 10, 580, 20);
+        jLabelTituloCrear.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabelTituloCrear.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelTituloCrear.setText("Crear un nuevo alumno");
+        jPanelCrear.add(jLabelTituloCrear);
+        jLabelTituloCrear.setBounds(10, 10, 580, 20);
 
         jTabbedPaneGeneral.addTab("Crear", jPanelCrear);
 
@@ -313,11 +315,11 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jPanelLeer.add(jRadioButtonLeerLista);
         jRadioButtonLeerLista.setBounds(30, 30, 240, 25);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Consultar datos de uno o varios alumnos por medio de su número de matrícula");
-        jPanelLeer.add(jLabel1);
-        jLabel1.setBounds(10, 10, 580, 20);
+        jLabelTituloLeer.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabelTituloLeer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelTituloLeer.setText("Consultar datos de uno o varios alumnos por medio de su número de matrícula");
+        jPanelLeer.add(jLabelTituloLeer);
+        jLabelTituloLeer.setBounds(10, 10, 580, 20);
         jPanelLeer.add(jTextFieldLeerManual);
         jTextFieldLeerManual.setBounds(240, 60, 180, 25);
 
@@ -370,18 +372,14 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jPanelActualizar.add(jButtonModificarLimpiar);
         jButtonModificarLimpiar.setBounds(149, 294, 105, 23);
 
-        jButtonModificar.setText("Modificar");
+        jButtonModificar.setText("Aplicar cambios");
         jButtonModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonModificarActionPerformed(evt);
             }
         });
         jPanelActualizar.add(jButtonModificar);
-        jButtonModificar.setBounds(324, 294, 75, 23);
-
-        jLabelModificar.setText("Elige nº  matrícula");
-        jPanelActualizar.add(jLabelModificar);
-        jLabelModificar.setBounds(417, 11, 123, 19);
+        jButtonModificar.setBounds(280, 290, 120, 23);
 
         jListModificar.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -392,7 +390,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jScrollPaneModificarLista.setViewportView(jListModificar);
 
         jPanelActualizar.add(jScrollPaneModificarLista);
-        jScrollPaneModificarLista.setBounds(417, 35, 123, 185);
+        jScrollPaneModificarLista.setBounds(460, 90, 123, 185);
 
         jButtonModificarIniciar.setText("Iniciar modificación");
         jButtonModificarIniciar.addActionListener(new java.awt.event.ActionListener() {
@@ -401,7 +399,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             }
         });
         jPanelActualizar.add(jButtonModificarIniciar);
-        jButtonModificarIniciar.setBounds(417, 238, 123, 23);
+        jButtonModificarIniciar.setBounds(470, 300, 123, 23);
 
         buttonGroupActualizar.add(jRadioButtonActuManual);
         jRadioButtonActuManual.setText("Insertar una matrícula manualmente");
@@ -411,7 +409,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             }
         });
         jPanelActualizar.add(jRadioButtonActuManual);
-        jRadioButtonActuManual.setBounds(40, 20, 199, 23);
+        jRadioButtonActuManual.setBounds(150, 30, 199, 23);
 
         buttonGroupActualizar.add(jRadioButtonActuLista);
         jRadioButtonActuLista.setText("Elegir una matrícula de la lista");
@@ -421,7 +419,13 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             }
         });
         jPanelActualizar.add(jRadioButtonActuLista);
-        jRadioButtonActuLista.setBounds(180, 20, 167, 23);
+        jRadioButtonActuLista.setBounds(420, 30, 167, 23);
+
+        jLabelTituloActualizar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabelTituloActualizar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelTituloActualizar.setText("Modifiar un alumno");
+        jPanelActualizar.add(jLabelTituloActualizar);
+        jLabelTituloActualizar.setBounds(10, 10, 580, 20);
 
         jTabbedPaneGeneral.addTab("Actualizar", jPanelActualizar);
 
@@ -497,7 +501,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             }
         });
         jPanelBorrar.add(jRadioButtonBorrarLista);
-        jRadioButtonBorrarLista.setBounds(10, 30, 167, 23);
+        jRadioButtonBorrarLista.setBounds(20, 30, 167, 23);
 
         buttonGroupBorrar.add(jRadioButtonBorrarManual);
         jRadioButtonBorrarManual.setText("Insertar una matrícula manualmente");
@@ -509,11 +513,23 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jPanelBorrar.add(jRadioButtonBorrarManual);
         jRadioButtonBorrarManual.setBounds(260, 30, 199, 23);
         jPanelBorrar.add(jTextFieldBorrarManual);
-        jTextFieldBorrarManual.setBounds(280, 60, 7, 20);
+        jTextFieldBorrarManual.setBounds(280, 60, 170, 20);
+
+        jLabelTituloActualizar1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabelTituloActualizar1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelTituloActualizar1.setText("Eliminar un alumno");
+        jPanelBorrar.add(jLabelTituloActualizar1);
+        jLabelTituloActualizar1.setBounds(10, 10, 580, 20);
 
         jTabbedPaneGeneral.addTab("Borrar", jPanelBorrar);
 
+        jPanelGuardar.setLayout(null);
+
+        jLabelGuardarDescartar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabelGuardarDescartar.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelGuardarDescartar.setText("Deshacer todos los cambios");
+        jPanelGuardar.add(jLabelGuardarDescartar);
+        jLabelGuardarDescartar.setBounds(20, 40, 200, 15);
 
         jButtonGuardarDescartar.setText("Aceptar");
         jButtonGuardarDescartar.addActionListener(new java.awt.event.ActionListener() {
@@ -521,8 +537,14 @@ public class PrincipalJFrame extends javax.swing.JFrame {
                 jButtonGuardarDescartarActionPerformed(evt);
             }
         });
+        jPanelGuardar.add(jButtonGuardarDescartar);
+        jButtonGuardarDescartar.setBounds(250, 35, 71, 23);
 
-        jLabelGuardarDescartarSalir.setText("Deshacer todos los cambios y salir");
+        jLabelGuardarDescartarSalir.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabelGuardarDescartarSalir.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabelGuardarDescartarSalir.setText("Deshacer todos los cambios y Salir");
+        jPanelGuardar.add(jLabelGuardarDescartarSalir);
+        jLabelGuardarDescartarSalir.setBounds(20, 80, 200, 15);
 
         jButtonGuardarDescartarSalir.setText("Aceptar");
         jButtonGuardarDescartarSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -530,8 +552,14 @@ public class PrincipalJFrame extends javax.swing.JFrame {
                 jButtonGuardarDescartarSalirActionPerformed(evt);
             }
         });
+        jPanelGuardar.add(jButtonGuardarDescartarSalir);
+        jButtonGuardarDescartarSalir.setBounds(250, 75, 71, 23);
 
-        jLabelGuardarGuardarSalir.setText("Guardar todos los cambios y salir");
+        jLabelGuardarGuardarSalir.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabelGuardarGuardarSalir.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabelGuardarGuardarSalir.setText("Guardar todos los cambios y Salir");
+        jPanelGuardar.add(jLabelGuardarGuardarSalir);
+        jLabelGuardarGuardarSalir.setBounds(20, 120, 200, 15);
 
         jButtonGuardarGuardarSalir.setText("Aceptar");
         jButtonGuardarGuardarSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -539,41 +567,8 @@ public class PrincipalJFrame extends javax.swing.JFrame {
                 jButtonGuardarGuardarSalirActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanelGuardarLayout = new javax.swing.GroupLayout(jPanelGuardar);
-        jPanelGuardar.setLayout(jPanelGuardarLayout);
-        jPanelGuardarLayout.setHorizontalGroup(
-            jPanelGuardarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelGuardarLayout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(jPanelGuardarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelGuardarDescartarSalir)
-                    .addComponent(jLabelGuardarDescartar, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabelGuardarGuardarSalir, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelGuardarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonGuardarDescartar)
-                    .addComponent(jButtonGuardarDescartarSalir)
-                    .addComponent(jButtonGuardarGuardarSalir))
-                .addContainerGap(330, Short.MAX_VALUE))
-        );
-        jPanelGuardarLayout.setVerticalGroup(
-            jPanelGuardarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelGuardarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelGuardarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelGuardarDescartar)
-                    .addComponent(jButtonGuardarDescartar))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelGuardarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelGuardarDescartarSalir)
-                    .addComponent(jButtonGuardarDescartarSalir))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelGuardarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelGuardarGuardarSalir)
-                    .addComponent(jButtonGuardarGuardarSalir))
-                .addContainerGap(212, Short.MAX_VALUE))
-        );
+        jPanelGuardar.add(jButtonGuardarGuardarSalir);
+        jButtonGuardarGuardarSalir.setBounds(250, 115, 71, 23);
 
         jTabbedPaneGeneral.addTab("Guardar y salir", jPanelGuardar);
 
@@ -585,9 +580,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jTabbedPaneGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jTabbedPaneGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
         );
 
         pack();
@@ -626,7 +619,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         }
     }
 
-    private void agregarDeTextoATabla(JTextField jtf, DefaultTableModel dtm) {
+    private void agregarDeCampoTextoATabla(JTextField jtf, DefaultTableModel dtm) {
         boolean encontrado = false;
         int matricula;
         if (jtf.getText().isEmpty()) {
@@ -800,7 +793,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
                 break;
             case 2:
                 jRadioButtonActuManual.setSelected(true);
-                jTextFieldModificarMatricula.setEditable(true);                
+                jTextFieldModificarMatricula.setEditable(true);
                 limpiarVariosJTextFields(new ArrayList<JTextField>() {
                     {
                         add(jTextFieldModificarMatricula);
@@ -814,7 +807,8 @@ public class PrincipalJFrame extends javax.swing.JFrame {
                 jListModificar.setVisible(false);
                 break;
             case 3:
-                actualizarListaMatriculas(dlmDelete);
+                jTextFieldBorrarManual.setVisible(true);
+                jListBorrar.setVisible(false);
                 break;
             case 4:
                 break;
@@ -823,7 +817,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
 
     private void jButtonLeerAniadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLeerAniadirActionPerformed
         if (jRadioButtonLeerManual.isSelected()) {
-            agregarDeTextoATabla(jTextFieldLeerManual, dtmRead);
+            agregarDeCampoTextoATabla(jTextFieldLeerManual, dtmRead);
         } else {
             agregarDeListaATabla(jListLeer, dtmRead);
         }
@@ -834,7 +828,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonLeerLimpiarTablaActionPerformed
 
     private void jButtonModificarIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarIniciarActionPerformed
-        
+
         agregarDeListaACamposModificacion(jListModificar);
     }//GEN-LAST:event_jButtonModificarIniciarActionPerformed
 
@@ -852,7 +846,12 @@ public class PrincipalJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonModificarActionPerformed
 
     private void jButtonBorrarAniadirTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarAniadirTablaActionPerformed
-        agregarDeListaATabla(jListBorrar, dtmDelete);
+        if (jRadioButtonBorrarManual.isSelected()) {
+
+            agregarDeCampoTextoATabla(jTextFieldBorrarManual, dtmDelete);
+        } else {
+            agregarDeListaATabla(jListBorrar, dtmDelete);
+        }
     }//GEN-LAST:event_jButtonBorrarAniadirTablaActionPerformed
 
     private void jButtonBorrarLimpiarTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarLimpiarTablaActionPerformed
@@ -864,7 +863,11 @@ public class PrincipalJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonBorrarRegistrosActionPerformed
 
     private void jButtonGuardarDescartarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarDescartarActionPerformed
-        alumnosAD = Conexion.importarColeccion();
+        int opcion = JOptionPane.showConfirmDialog(null, "Se perderán todos los cambios que no hayan sido guardados, \n¿desea deshacer los cambios?", "Deshacer cambios", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.DEFAULT_OPTION, null);
+        if (opcion == 0) {
+            alumnosAD = Conexion.importarColeccion();
+
+        }
     }//GEN-LAST:event_jButtonGuardarDescartarActionPerformed
 
     private void jButtonGuardarDescartarSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarDescartarSalirActionPerformed
@@ -923,11 +926,14 @@ public class PrincipalJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jRadioButtonActuListaActionPerformed
 
     private void jRadioButtonBorrarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonBorrarListaActionPerformed
-        
+        actualizarListaMatriculas(dlmDelete);
+        jListBorrar.setVisible(true);
+        jTextFieldBorrarManual.setVisible(false);
     }//GEN-LAST:event_jRadioButtonBorrarListaActionPerformed
 
     private void jRadioButtonBorrarManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonBorrarManualActionPerformed
-        // TODO add your handling code here:
+        jTextFieldBorrarManual.setVisible(true);
+        jListBorrar.setVisible(false);
     }//GEN-LAST:event_jRadioButtonBorrarManualActionPerformed
 
     public static void main(String args[]) {
@@ -986,8 +992,6 @@ public class PrincipalJFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButtonModificar;
     private javax.swing.JButton jButtonModificarIniciar;
     private javax.swing.JButton jButtonModificarLimpiar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelCrearMatricula;
     private javax.swing.JLabel jLabelCrearNombre;
     private javax.swing.JLabel jLabelCrearNot1Ev;
@@ -997,13 +1001,16 @@ public class PrincipalJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelGuardarDescartar;
     private javax.swing.JLabel jLabelGuardarDescartarSalir;
     private javax.swing.JLabel jLabelGuardarGuardarSalir;
-    private javax.swing.JLabel jLabelModificar;
     private javax.swing.JLabel jLabelModificarMatricula;
     private javax.swing.JLabel jLabelModificarNombre;
     private javax.swing.JLabel jLabelModificarNot1Ev;
     private javax.swing.JLabel jLabelModificarNot2Ev;
     private javax.swing.JLabel jLabelModificarNotExtra;
     private javax.swing.JLabel jLabelModificarNotFinal;
+    private javax.swing.JLabel jLabelTituloActualizar;
+    private javax.swing.JLabel jLabelTituloActualizar1;
+    private javax.swing.JLabel jLabelTituloCrear;
+    private javax.swing.JLabel jLabelTituloLeer;
     private javax.swing.JList<String> jListBorrar;
     private javax.swing.JList<String> jListLeer;
     private javax.swing.JList<String> jListModificar;
