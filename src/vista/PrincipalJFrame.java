@@ -16,8 +16,8 @@ public class PrincipalJFrame extends javax.swing.JFrame {
     ArrayList<AlumnoAD> alumnosAD = null;
 
     //VARIABLES AUXILIARES
-    String regexMatricula = "^-?\\d+$";
-    String regexNotas = "^-?\\d+(\\.\\d+)?$";
+    String regexMatricula = "^[1-9]\\d{0,8}$";//evita matriculas negativas, con decimales y de más de 9 dígitos
+    String regexNotas = "^[1-9]\\d{0,1}(\\.\\d{1,2})?$";//evita notas con más de dos número enteros y más de dos decimales, así como negativas
     Color miRojo = new Color(255, 105, 97);
     Color defecto = Color.WHITE;
 
@@ -37,7 +37,6 @@ public class PrincipalJFrame extends javax.swing.JFrame {
 
     public PrincipalJFrame() {
         initComponents();
-
         alumnosAD = Conexion.importarColeccion();
 
         //ELEMENTOS PESTAÑA READ
@@ -283,7 +282,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             }
         });
         jPanelLeer.add(jButtonLeerAniadir);
-        jButtonLeerAniadir.setBounds(160, 80, 170, 30);
+        jButtonLeerAniadir.setBounds(160, 80, 160, 30);
 
         jTableLeerTabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -328,7 +327,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             }
         });
         jPanelLeer.add(jRadioButtonLeerManual);
-        jRadioButtonLeerManual.setBounds(360, 40, 240, 25);
+        jRadioButtonLeerManual.setBounds(330, 50, 240, 25);
 
         buttonGroupLeer.add(jRadioButtonLeerLista);
         jRadioButtonLeerLista.setText("Elegir una matrícula de la lista");
@@ -346,7 +345,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jPanelLeer.add(jLabelTituloLeer);
         jLabelTituloLeer.setBounds(10, 10, 580, 20);
         jPanelLeer.add(jTextFieldLeerManual);
-        jTextFieldLeerManual.setBounds(360, 70, 200, 25);
+        jTextFieldLeerManual.setBounds(330, 80, 200, 25);
 
         jTabbedPaneGeneral.addTab("Leer", jPanelLeer);
 
@@ -550,7 +549,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jScrollPaneBorrarLista.setViewportView(jListBorrar);
 
         jPanelBorrar.add(jScrollPaneBorrarLista);
-        jScrollPaneBorrarLista.setBounds(20, 90, 90, 200);
+        jScrollPaneBorrarLista.setBounds(20, 60, 90, 230);
 
         jTabbedPaneGeneral.addTab("Borrar", jPanelBorrar);
 
@@ -639,12 +638,18 @@ public class PrincipalJFrame extends javax.swing.JFrame {
 
     private boolean agregarDeMatriculaATabla(int numMat, DefaultTableModel dtm) {
         boolean encontrado = false;
-        for (int i = 0; i < alumnosAD.size() && encontrado == false; i++) {
+        AlumnoAD alu = CrudDatos.read(alumnosAD, numMat);
+        if (alu != null) {
+            agregarAlumnoATabla(dtm, alu);
+            encontrado = true;
+        }
+
+        /*for (int i = 0; i < alumnosAD.size() && encontrado == false; i++) {
             if (numMat == alumnosAD.get(i).getNMatricula()) {
                 encontrado = true;
                 agregarAlumnoATabla(dtm, alumnosAD.get(i));
             }
-        }
+        }*/
         return encontrado;
     }
 
@@ -776,21 +781,16 @@ public class PrincipalJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonCrearActionPerformed
 
     private void jButtonCrearLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearLimpiarActionPerformed
-        jTextFieldCrearMatricula.setText("");
-        jTextFieldCrearNombre.setText("");
-        jTextFieldCrearNot1Ev.setText("");
-        jTextFieldCrearNot2Ev.setText("");
-        jTextFieldCrearNotFinal.setText("");
-        jTextFieldCrearNotExtra.setText("");
+        limpiarVariosJTextFields(AJtfCrear);
     }//GEN-LAST:event_jButtonCrearLimpiarActionPerformed
 
     private void jTabbedPaneGeneralStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPaneGeneralStateChanged
         // TODO add your handling code here:
         int indexActual = jTabbedPaneGeneral.getModel().getSelectedIndex();
-
+        
         switch (indexActual) {
             case 0:
-
+                
                 break;
             case 1:
                 jTextFieldLeerManual.setVisible(true);
@@ -854,7 +854,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             if (!jTextFieldModificarMatricula.getText().isEmpty() && jTextFieldModificarMatricula.getText().matches(regexMatricula)) {
 
                 if (!agregarDeNumMatriACamposModificacion(Integer.parseInt(jTextFieldModificarMatricula.getText()), AJtfActu)) {
-                    JOptionPane.showConfirmDialog(null, "No existe ningún alumno con esa matrícula.");
+                    JOptionPane.showMessageDialog(null, "No existe ningún alumno con esa matrícula.");
                 } else {
                     for (JTextField t : AJtfActu) {
                         t.setEnabled(true);
@@ -880,12 +880,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonModificarIniciarActionPerformed
 
     private void jButtonModificarLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarLimpiarActionPerformed
-
-        jTextFieldModificarNombre.setText("");
-        jTextFieldModificarNot1Ev.setText("");
-        jTextFieldModificarNot2Ev.setText("");
-        jTextFieldModificarNotFinal.setText("");
-        jTextFieldModificarNotExtra.setText("");
+        limpiarVariosJTextFields(new ArrayList<>(AJtfActu.subList(1, AJtfActu.size())));
     }//GEN-LAST:event_jButtonModificarLimpiarActionPerformed
 
     private void jButtonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarActionPerformed
@@ -940,22 +935,35 @@ public class PrincipalJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonBorrarRegistrosActionPerformed
 
     private void jButtonGuardarDescartarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarDescartarActionPerformed
-        int opcion = JOptionPane.showConfirmDialog(null, "Se perderán todos los cambios que no hayan sido guardados, \n¿desea deshacer los cambios?", "Deshacer cambios", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.DEFAULT_OPTION, null);
+        int opcion = JOptionPane.showConfirmDialog(null, "Se perderán todos los cambios que no hayan sido guardados."
+                + "\n¿Desea deshacer los cambios y volver al estado inicial?", "Deshacer cambios", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.DEFAULT_OPTION, null);
         if (opcion == 0) {
             alumnosAD = Conexion.importarColeccion();
-
         }
     }//GEN-LAST:event_jButtonGuardarDescartarActionPerformed
 
     private void jButtonGuardarDescartarSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarDescartarSalirActionPerformed
-        alumnosAD = null;
-        System.exit(0);
+        int opcion = JOptionPane.showConfirmDialog(null, "Se dispone a salir del programa sin guardar ningún cambio. "
+                + "¿Está seguro?", "Salir del programa", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.DEFAULT_OPTION, null);
+        if (opcion == 0) {
+            alumnosAD = null;
+            System.exit(0);
+        }
+
     }//GEN-LAST:event_jButtonGuardarDescartarSalirActionPerformed
 
     private void jButtonGuardarGuardarSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarGuardarSalirActionPerformed
-        Conexion.exportarColecion(alumnosAD);
-        System.exit(0);
-
+        int opcion = JOptionPane.showConfirmDialog(null, "Se dispone a guardar todo los cambios realizados hasta ahora."
+                + "\nEste proceso es IRREVERSIBLE. También se saldrá del programa."
+                + " ¿Desea continuar?", "Salir y guardar", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.DEFAULT_OPTION, null);
+        if (opcion == 0) {
+            opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro?",
+                    "Confirmar salida y guardado", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.DEFAULT_OPTION, null);
+            if (opcion == 0) {
+                Conexion.exportarColecion(alumnosAD);
+                System.exit(0);
+            }
+        }
     }//GEN-LAST:event_jButtonGuardarGuardarSalirActionPerformed
 
     private void jRadioButtonLeerManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonLeerManualActionPerformed
