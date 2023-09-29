@@ -3,12 +3,9 @@ package vista;
 import controlador.Conexion;
 import controlador.CrudDatos;
 import java.awt.Color;
-import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import javax.swing.DefaultListModel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -24,6 +21,9 @@ public class PrincipalJFrame extends javax.swing.JFrame {
     Color miRojo = new Color(255, 105, 97);
     Color defecto = Color.WHITE;
 
+    ArrayList<JTextField> AJtfCrear = null;
+    ArrayList<JTextField> AJtfActu = null;
+
     //ELEMENTOS PESTAÑA READ
     DefaultListModel dlmRead = null;
     DefaultTableModel dtmRead = null;
@@ -37,6 +37,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
 
     public PrincipalJFrame() {
         initComponents();
+
         alumnosAD = Conexion.importarColeccion();
 
         //ELEMENTOS PESTAÑA READ
@@ -64,6 +65,27 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jTableBorrarTabla.setModel(dtmDelete);
         jRadioButtonBorrarManual.setSelected(true);
 
+        AJtfCrear = new ArrayList<>() {
+            {
+                add(jTextFieldCrearMatricula);
+                add(jTextFieldCrearNombre);
+                add(jTextFieldCrearNot1Ev);
+                add(jTextFieldCrearNot2Ev);
+                add(jTextFieldCrearNotFinal);
+                add(jTextFieldCrearNotExtra);
+            }
+        };
+
+        AJtfActu = new ArrayList<>() {
+            {
+                add(jTextFieldModificarMatricula);
+                add(jTextFieldModificarNombre);
+                add(jTextFieldModificarNot1Ev);
+                add(jTextFieldModificarNot2Ev);
+                add(jTextFieldModificarNotFinal);
+                add(jTextFieldModificarNotExtra);
+            }
+        };
     }
 
     @SuppressWarnings("unchecked")
@@ -124,8 +146,6 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jLabelTituloActualizar = new javax.swing.JLabel();
         jPanelBorrar = new javax.swing.JPanel();
         jButtonBorrarLimpiarTabla = new javax.swing.JButton();
-        jScrollPaneBorrarLista = new javax.swing.JScrollPane();
-        jListBorrar = new javax.swing.JList<>();
         jScrollPaneBorrarTabla = new javax.swing.JScrollPane();
         jTableBorrarTabla = new javax.swing.JTable();
         jButtonBorrarAniadirTabla = new javax.swing.JButton();
@@ -134,6 +154,8 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jRadioButtonBorrarManual = new javax.swing.JRadioButton();
         jTextFieldBorrarManual = new javax.swing.JTextField();
         jLabelTituloActualizar1 = new javax.swing.JLabel();
+        jScrollPaneBorrarLista = new javax.swing.JScrollPane();
+        jListBorrar = new javax.swing.JList<>();
         jPanelGuardar = new javax.swing.JPanel();
         jLabelGuardarDescartar = new javax.swing.JLabel();
         jButtonGuardarDescartar = new javax.swing.JButton();
@@ -143,7 +165,9 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jButtonGuardarGuardarSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(700, 500));
+        setTitle("Gestión de alumnos");
+        setMinimumSize(new java.awt.Dimension(680, 450));
+        setPreferredSize(new java.awt.Dimension(650, 400));
 
         jTabbedPaneGeneral.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -246,19 +270,20 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        jListLeer.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPaneLeerLista.setViewportView(jListLeer);
 
         jPanelLeer.add(jScrollPaneLeerLista);
-        jScrollPaneLeerLista.setBounds(30, 60, 100, 230);
+        jScrollPaneLeerLista.setBounds(30, 70, 110, 240);
 
-        jButtonLeerAniadir.setText("Consultar datos");
+        jButtonLeerAniadir.setText("Consultar matricula");
         jButtonLeerAniadir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonLeerAniadirActionPerformed(evt);
             }
         });
         jPanelLeer.add(jButtonLeerAniadir);
-        jButtonLeerAniadir.setBounds(460, 70, 120, 23);
+        jButtonLeerAniadir.setBounds(160, 80, 170, 30);
 
         jTableLeerTabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -284,7 +309,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jScrollPaneLeerTabla.setViewportView(jTableLeerTabla);
 
         jPanelLeer.add(jScrollPaneLeerTabla);
-        jScrollPaneLeerTabla.setBounds(158, 100, 420, 190);
+        jScrollPaneLeerTabla.setBounds(160, 120, 470, 190);
 
         jButtonLeerLimpiarTabla.setText("Limpiar tabla");
         jButtonLeerLimpiarTabla.addActionListener(new java.awt.event.ActionListener() {
@@ -293,7 +318,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             }
         });
         jPanelLeer.add(jButtonLeerLimpiarTabla);
-        jButtonLeerLimpiarTabla.setBounds(160, 300, 120, 23);
+        jButtonLeerLimpiarTabla.setBounds(510, 330, 120, 23);
 
         buttonGroupLeer.add(jRadioButtonLeerManual);
         jRadioButtonLeerManual.setText("Insertar una matrícula manualmente");
@@ -303,7 +328,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             }
         });
         jPanelLeer.add(jRadioButtonLeerManual);
-        jRadioButtonLeerManual.setBounds(230, 30, 240, 25);
+        jRadioButtonLeerManual.setBounds(360, 40, 240, 25);
 
         buttonGroupLeer.add(jRadioButtonLeerLista);
         jRadioButtonLeerLista.setText("Elegir una matrícula de la lista");
@@ -313,7 +338,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             }
         });
         jPanelLeer.add(jRadioButtonLeerLista);
-        jRadioButtonLeerLista.setBounds(30, 30, 240, 25);
+        jRadioButtonLeerLista.setBounds(30, 40, 240, 25);
 
         jLabelTituloLeer.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabelTituloLeer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -321,47 +346,53 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jPanelLeer.add(jLabelTituloLeer);
         jLabelTituloLeer.setBounds(10, 10, 580, 20);
         jPanelLeer.add(jTextFieldLeerManual);
-        jTextFieldLeerManual.setBounds(240, 60, 180, 25);
+        jTextFieldLeerManual.setBounds(360, 70, 200, 25);
 
         jTabbedPaneGeneral.addTab("Leer", jPanelLeer);
 
         jPanelActualizar.setLayout(null);
 
+        jLabelModificarMatricula.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelModificarMatricula.setText("Número de matrícula");
         jPanelActualizar.add(jLabelModificarMatricula);
-        jLabelModificarMatricula.setBounds(33, 69, 98, 14);
+        jLabelModificarMatricula.setBounds(40, 60, 150, 30);
         jPanelActualizar.add(jTextFieldModificarMatricula);
-        jTextFieldModificarMatricula.setBounds(149, 66, 250, 20);
+        jTextFieldModificarMatricula.setBounds(200, 60, 220, 30);
         jPanelActualizar.add(jTextFieldModificarNombre);
-        jTextFieldModificarNombre.setBounds(149, 104, 250, 20);
+        jTextFieldModificarNombre.setBounds(200, 100, 220, 30);
         jPanelActualizar.add(jTextFieldModificarNot1Ev);
-        jTextFieldModificarNot1Ev.setBounds(149, 142, 250, 20);
+        jTextFieldModificarNot1Ev.setBounds(200, 140, 220, 30);
         jPanelActualizar.add(jTextFieldModificarNot2Ev);
-        jTextFieldModificarNot2Ev.setBounds(149, 180, 250, 20);
+        jTextFieldModificarNot2Ev.setBounds(200, 180, 220, 30);
         jPanelActualizar.add(jTextFieldModificarNotFinal);
-        jTextFieldModificarNotFinal.setBounds(149, 218, 250, 20);
+        jTextFieldModificarNotFinal.setBounds(200, 220, 220, 30);
         jPanelActualizar.add(jTextFieldModificarNotExtra);
-        jTextFieldModificarNotExtra.setBounds(149, 256, 250, 20);
+        jTextFieldModificarNotExtra.setBounds(200, 260, 220, 30);
 
+        jLabelModificarNotExtra.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelModificarNotExtra.setText("Nota extra");
         jPanelActualizar.add(jLabelModificarNotExtra);
-        jLabelModificarNotExtra.setBounds(79, 259, 52, 14);
+        jLabelModificarNotExtra.setBounds(40, 260, 150, 30);
 
+        jLabelModificarNotFinal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelModificarNotFinal.setText("Nota final");
         jPanelActualizar.add(jLabelModificarNotFinal);
-        jLabelModificarNotFinal.setBounds(85, 221, 46, 14);
+        jLabelModificarNotFinal.setBounds(40, 220, 150, 30);
 
+        jLabelModificarNot2Ev.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelModificarNot2Ev.setText("Nota segunda evaluación");
         jPanelActualizar.add(jLabelModificarNot2Ev);
-        jLabelModificarNot2Ev.setBounds(10, 183, 121, 14);
+        jLabelModificarNot2Ev.setBounds(40, 180, 150, 30);
 
+        jLabelModificarNot1Ev.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelModificarNot1Ev.setText("Nota primera evaluación");
         jPanelActualizar.add(jLabelModificarNot1Ev);
-        jLabelModificarNot1Ev.setBounds(15, 145, 116, 14);
+        jLabelModificarNot1Ev.setBounds(40, 140, 150, 30);
 
+        jLabelModificarNombre.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelModificarNombre.setText("Nombre y apellidos");
         jPanelActualizar.add(jLabelModificarNombre);
-        jLabelModificarNombre.setBounds(41, 107, 90, 14);
+        jLabelModificarNombre.setBounds(40, 100, 150, 30);
 
         jButtonModificarLimpiar.setText("Limpiar campos");
         jButtonModificarLimpiar.addActionListener(new java.awt.event.ActionListener() {
@@ -370,7 +401,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             }
         });
         jPanelActualizar.add(jButtonModificarLimpiar);
-        jButtonModificarLimpiar.setBounds(149, 294, 105, 23);
+        jButtonModificarLimpiar.setBounds(200, 300, 130, 23);
 
         jButtonModificar.setText("Aplicar cambios");
         jButtonModificar.addActionListener(new java.awt.event.ActionListener() {
@@ -379,7 +410,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             }
         });
         jPanelActualizar.add(jButtonModificar);
-        jButtonModificar.setBounds(280, 290, 120, 23);
+        jButtonModificar.setBounds(490, 310, 120, 40);
 
         jListModificar.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -390,7 +421,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jScrollPaneModificarLista.setViewportView(jListModificar);
 
         jPanelActualizar.add(jScrollPaneModificarLista);
-        jScrollPaneModificarLista.setBounds(460, 90, 123, 185);
+        jScrollPaneModificarLista.setBounds(450, 90, 160, 200);
 
         jButtonModificarIniciar.setText("Iniciar modificación");
         jButtonModificarIniciar.addActionListener(new java.awt.event.ActionListener() {
@@ -399,7 +430,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             }
         });
         jPanelActualizar.add(jButtonModificarIniciar);
-        jButtonModificarIniciar.setBounds(470, 300, 123, 23);
+        jButtonModificarIniciar.setBounds(460, 30, 140, 23);
 
         buttonGroupActualizar.add(jRadioButtonActuManual);
         jRadioButtonActuManual.setText("Insertar una matrícula manualmente");
@@ -409,7 +440,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             }
         });
         jPanelActualizar.add(jRadioButtonActuManual);
-        jRadioButtonActuManual.setBounds(150, 30, 199, 23);
+        jRadioButtonActuManual.setBounds(200, 30, 240, 23);
 
         buttonGroupActualizar.add(jRadioButtonActuLista);
         jRadioButtonActuLista.setText("Elegir una matrícula de la lista");
@@ -419,7 +450,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             }
         });
         jPanelActualizar.add(jRadioButtonActuLista);
-        jRadioButtonActuLista.setBounds(420, 30, 167, 23);
+        jRadioButtonActuLista.setBounds(450, 60, 190, 23);
 
         jLabelTituloActualizar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabelTituloActualizar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -438,17 +469,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             }
         });
         jPanelBorrar.add(jButtonBorrarLimpiarTabla);
-        jButtonBorrarLimpiarTabla.setBounds(140, 300, 93, 23);
-
-        jListBorrar.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPaneBorrarLista.setViewportView(jListBorrar);
-
-        jPanelBorrar.add(jScrollPaneBorrarLista);
-        jScrollPaneBorrarLista.setBounds(10, 98, 99, 190);
+        jButtonBorrarLimpiarTabla.setBounds(140, 300, 120, 23);
 
         jTableBorrarTabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -482,16 +503,16 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             }
         });
         jPanelBorrar.add(jButtonBorrarAniadirTabla);
-        jButtonBorrarAniadirTabla.setBounds(470, 40, 99, 23);
+        jButtonBorrarAniadirTabla.setBounds(130, 60, 120, 23);
 
-        jButtonBorrarRegistros.setText("Borrar registros");
+        jButtonBorrarRegistros.setText("Eliminar alumno");
         jButtonBorrarRegistros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonBorrarRegistrosActionPerformed(evt);
             }
         });
         jPanelBorrar.add(jButtonBorrarRegistros);
-        jButtonBorrarRegistros.setBounds(470, 300, 107, 23);
+        jButtonBorrarRegistros.setBounds(450, 300, 140, 23);
 
         buttonGroupBorrar.add(jRadioButtonBorrarLista);
         jRadioButtonBorrarLista.setText("Elegir una matrícula de la lista");
@@ -501,7 +522,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             }
         });
         jPanelBorrar.add(jRadioButtonBorrarLista);
-        jRadioButtonBorrarLista.setBounds(20, 30, 167, 23);
+        jRadioButtonBorrarLista.setBounds(20, 30, 200, 23);
 
         buttonGroupBorrar.add(jRadioButtonBorrarManual);
         jRadioButtonBorrarManual.setText("Insertar una matrícula manualmente");
@@ -511,15 +532,25 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             }
         });
         jPanelBorrar.add(jRadioButtonBorrarManual);
-        jRadioButtonBorrarManual.setBounds(260, 30, 199, 23);
+        jRadioButtonBorrarManual.setBounds(260, 30, 230, 23);
         jPanelBorrar.add(jTextFieldBorrarManual);
-        jTextFieldBorrarManual.setBounds(280, 60, 170, 20);
+        jTextFieldBorrarManual.setBounds(280, 60, 200, 25);
 
         jLabelTituloActualizar1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabelTituloActualizar1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelTituloActualizar1.setText("Eliminar un alumno");
         jPanelBorrar.add(jLabelTituloActualizar1);
         jLabelTituloActualizar1.setBounds(10, 10, 580, 20);
+
+        jListBorrar.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPaneBorrarLista.setViewportView(jListBorrar);
+
+        jPanelBorrar.add(jScrollPaneBorrarLista);
+        jScrollPaneBorrarLista.setBounds(20, 90, 90, 200);
 
         jTabbedPaneGeneral.addTab("Borrar", jPanelBorrar);
 
@@ -576,11 +607,11 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPaneGeneral)
+            .addComponent(jTabbedPaneGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPaneGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
+            .addComponent(jTabbedPaneGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
         );
 
         pack();
@@ -591,7 +622,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
     private void actualizarListaMatriculas(DefaultListModel dlm) {
         dlm.removeAllElements();
         for (AlumnoAD a : alumnosAD) {
-            dlm.addElement(a.getNMatricula());
+            dlm.addElement("" + a.getNMatricula());
         }
     }
 
@@ -606,41 +637,15 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         );
     }
 
-    private void agregarDeListaATabla(JList jList, DefaultTableModel dtm) {
-        List listaMatriculas = jList.getSelectedValuesList();
-        if (listaMatriculas.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar uno o varios elementos de la lista");
-        } else {
-            for (AlumnoAD a : alumnosAD) {
-                if (listaMatriculas.contains(a.getNMatricula())) {
-                    agregarAlumnoATabla(dtm, a);
-                }
-            }
-        }
-    }
-
-    private void agregarDeCampoTextoATabla(JTextField jtf, DefaultTableModel dtm) {
+    private boolean agregarDeMatriculaATabla(int numMat, DefaultTableModel dtm) {
         boolean encontrado = false;
-        int matricula;
-        if (jtf.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Debe introducir un número de matrícula.");
-        } else {
-            if (!jtf.getText().matches(regexMatricula)) {
-                JOptionPane.showMessageDialog(null, "La matrícula porporcionada no tiene un formato válido.");
-            } else {
-                matricula = parseInt(jtf.getText());
-                for (AlumnoAD a : alumnosAD) {
-                    if (a.getNMatricula() == matricula) {
-                        agregarAlumnoATabla(dtm, a);
-                        encontrado = true;
-                    }
-                }
-                if (encontrado == false) {
-                    JOptionPane.showMessageDialog(null, "No hay ningún registro de alumno con esa matrícula.");
-                }
+        for (int i = 0; i < alumnosAD.size() && encontrado == false; i++) {
+            if (numMat == alumnosAD.get(i).getNMatricula()) {
+                encontrado = true;
+                agregarAlumnoATabla(dtm, alumnosAD.get(i));
             }
-
         }
+        return encontrado;
     }
 
     private void limpiarVariosJTextFields(ArrayList<JTextField> listaTextFields) {
@@ -655,19 +660,20 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         }
     }
 
-    private void agregarDeListaACamposModificacion(JList jList) {
-        if (jList.getSelectedValue() != null) {
-            for (AlumnoAD a : alumnosAD) {
-                if (a.getNMatricula() == (Integer) jList.getSelectedValue()) {
-                    jTextFieldModificarMatricula.setText(String.valueOf(a.getNMatricula()));
-                    jTextFieldModificarNombre.setText("" + a.getNombre());
-                    jTextFieldModificarNot1Ev.setText("0" + a.getNot1Ev());
-                    jTextFieldModificarNot2Ev.setText("0" + a.getNota2Ev());
-                    jTextFieldModificarNotFinal.setText("0" + a.getNotaFinal());
-                    jTextFieldModificarNotExtra.setText("0" + a.getNotaExtra());
-                }
+    private boolean agregarDeNumMatriACamposModificacion(int numMatri, ArrayList<JTextField> AJtf) {
+        boolean encontrada = false;
+        for (int i = 0; i < alumnosAD.size() && encontrada == false; i++) {
+            if (alumnosAD.get(0).getNMatricula() == numMatri) {
+                encontrada = true;
+                AJtf.get(0).setText("" + alumnosAD.get(i).getNMatricula());
+                AJtf.get(1).setText("" + alumnosAD.get(i).getNombre());
+                AJtf.get(2).setText("" + alumnosAD.get(i).getNot1Ev());
+                AJtf.get(3).setText("" + alumnosAD.get(i).getNota2Ev());
+                AJtf.get(4).setText("" + alumnosAD.get(i).getNotaFinal());
+                AJtf.get(5).setText("" + alumnosAD.get(i).getNotaExtra());
             }
         }
+        return encontrada;
     }
 
     private void modificarAlumno() {
@@ -675,9 +681,10 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         AlumnoAD aluAD = new AlumnoAD();
         aluAD.setNMatricula(Integer.parseInt(jTextFieldModificarMatricula.getText()));
 
-        aluAD.setNombre(jTextFieldCrearNombre.getText());
+        aluAD.setNombre(jTextFieldModificarNombre.getText());
 
         if (asignarCamposNotasAAlumno(aluAD, jTextFieldModificarNot1Ev, jTextFieldModificarNot2Ev, jTextFieldModificarNotFinal, jTextFieldModificarNotExtra)) {
+
             if (CrudDatos.update(alumnosAD, aluAD)) {
                 JOptionPane.showMessageDialog(null, "El alumno: \n"
                         + aluAD.toString() + "\nHa sido modificado correctamente");
@@ -705,14 +712,14 @@ public class PrincipalJFrame extends javax.swing.JFrame {
                 } else {
                     JOptionPane.showMessageDialog(null, "Ya existe un alumno con el"
                             + " número de matrícula: " + aluAD.getNMatricula() + "."
-                            + "\nNo se puede crear el alumno. Pruebe otro número dematrícula.");
+                            + "\nNo se puede crear el alumno. Pruebe otro número de matrícula.");
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Algunos campos contienen"
                         + " información no válida");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Debe elegir un número de matrícula.");
+            JOptionPane.showMessageDialog(null, "Debe introducir un número de matrícula válido.");
         }
     }
 
@@ -756,12 +763,9 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         for (int i = dtmDelete.getRowCount() - 1; i >= 0; i--) {
             matriculasABorrar.add((Integer) dtmDelete.getValueAt(i, 0));
         }
-        for (int i = alumnosAD.size() - 1; i >= 0; i--) {
-            if (matriculasABorrar.contains(alumnosAD.get(i).getNMatricula())) {
-                matriculasABorrar.remove(alumnosAD.get(i).getNMatricula());
-                alumnosAD.remove(alumnosAD.get(i));
 
-            }
+        for (Integer i : matriculasABorrar) {
+            CrudDatos.delete(alumnosAD, i);
         }
         limpiarTabla(dtmDelete);
     }
@@ -786,29 +790,35 @@ public class PrincipalJFrame extends javax.swing.JFrame {
 
         switch (indexActual) {
             case 0:
+
                 break;
             case 1:
                 jTextFieldLeerManual.setVisible(true);
                 jListLeer.setVisible(false);
+                limpiarTabla(dtmRead);
+                jRadioButtonLeerManual.setSelected(true);
+                jTextFieldLeerManual.setText("");
                 break;
             case 2:
                 jRadioButtonActuManual.setSelected(true);
+                for (JTextField t : AJtfActu) {
+                    t.setEnabled(false);
+                }
+                jTextFieldModificarMatricula.setEnabled(true);
                 jTextFieldModificarMatricula.setEditable(true);
-                limpiarVariosJTextFields(new ArrayList<JTextField>() {
-                    {
-                        add(jTextFieldModificarMatricula);
-                        add(jTextFieldModificarNombre);
-                        add(jTextFieldModificarNot1Ev);
-                        add(jTextFieldModificarNot2Ev);
-                        add(jTextFieldModificarNotFinal);
-                        add(jTextFieldModificarNotExtra);
-                    }
-                });
+                jTextFieldModificarMatricula.setBackground(Color.WHITE);
+
+                limpiarVariosJTextFields(AJtfActu);
+
                 jListModificar.setVisible(false);
                 break;
             case 3:
+                jRadioButtonBorrarManual.setSelected(true);
                 jTextFieldBorrarManual.setVisible(true);
+                jTextFieldBorrarManual.setText("");
                 jListBorrar.setVisible(false);
+                limpiarTabla(dtmDelete);
+
                 break;
             case 4:
                 break;
@@ -817,9 +827,21 @@ public class PrincipalJFrame extends javax.swing.JFrame {
 
     private void jButtonLeerAniadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLeerAniadirActionPerformed
         if (jRadioButtonLeerManual.isSelected()) {
-            agregarDeCampoTextoATabla(jTextFieldLeerManual, dtmRead);
+
+            if (!jTextFieldLeerManual.getText().isEmpty() && jTextFieldLeerManual.getText().matches(regexMatricula)) {
+
+                if (!agregarDeMatriculaATabla(Integer.parseInt(jTextFieldLeerManual.getText()), dtmRead)) {
+                    JOptionPane.showMessageDialog(null, "No existe ningún alumno con esa matrícula.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Introduzca una matrícula válida.");
+            }
         } else {
-            agregarDeListaATabla(jListLeer, dtmRead);
+            if (!jListLeer.isSelectionEmpty()) {
+                agregarDeMatriculaATabla(Integer.parseInt(jListLeer.getSelectedValue()), dtmRead);
+            } else {
+                JOptionPane.showMessageDialog(null, "Seleccione una matrícula de la lista.");
+            }
         }
     }//GEN-LAST:event_jButtonLeerAniadirActionPerformed
 
@@ -828,12 +850,37 @@ public class PrincipalJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonLeerLimpiarTablaActionPerformed
 
     private void jButtonModificarIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarIniciarActionPerformed
+        if (jRadioButtonActuManual.isSelected()) {
+            if (!jTextFieldModificarMatricula.getText().isEmpty() && jTextFieldModificarMatricula.getText().matches(regexMatricula)) {
 
-        agregarDeListaACamposModificacion(jListModificar);
+                if (!agregarDeNumMatriACamposModificacion(Integer.parseInt(jTextFieldModificarMatricula.getText()), AJtfActu)) {
+                    JOptionPane.showConfirmDialog(null, "No existe ningún alumno con esa matrícula.");
+                } else {
+                    for (JTextField t : AJtfActu) {
+                        t.setEnabled(true);
+                    }
+                    jTextFieldModificarMatricula.setEditable(false);
+                    jTextFieldModificarMatricula.setBackground(Color.lightGray);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Introduzca una matrícula válida.");
+            }
+        } else {
+            if (!jListModificar.isSelectionEmpty()) {
+                if (agregarDeNumMatriACamposModificacion(Integer.parseInt(jListModificar.getSelectedValue()), AJtfActu)) {
+                    for (JTextField t : AJtfActu) {
+                        t.setEnabled(true);
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe elegir una matrícula de la lista.");
+            }
+
+        }
     }//GEN-LAST:event_jButtonModificarIniciarActionPerformed
 
     private void jButtonModificarLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarLimpiarActionPerformed
-        jTextFieldModificarMatricula.setText("");
+
         jTextFieldModificarNombre.setText("");
         jTextFieldModificarNot1Ev.setText("");
         jTextFieldModificarNot2Ev.setText("");
@@ -842,16 +889,33 @@ public class PrincipalJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonModificarLimpiarActionPerformed
 
     private void jButtonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarActionPerformed
-        modificarAlumno();
+        if (!jTextFieldModificarMatricula.getText().isEmpty()) {
+            modificarAlumno();
+        } else {
+            JOptionPane.showMessageDialog(null, "Indique primero una matrícula para modificar al alumno.");
+        }
     }//GEN-LAST:event_jButtonModificarActionPerformed
 
     private void jButtonBorrarAniadirTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarAniadirTablaActionPerformed
+
         if (jRadioButtonBorrarManual.isSelected()) {
 
-            agregarDeCampoTextoATabla(jTextFieldBorrarManual, dtmDelete);
+            if (!jTextFieldBorrarManual.getText().isEmpty() && jTextFieldBorrarManual.getText().matches(regexMatricula)) {
+                agregarDeMatriculaATabla(Integer.parseInt(jTextFieldBorrarManual.getText()), dtmDelete);
+            } else {
+                JOptionPane.showMessageDialog(null, "Introduzca una matrícula válida.");
+            }
         } else {
-            agregarDeListaATabla(jListBorrar, dtmDelete);
+            if (jListBorrar.isSelectionEmpty()) {
+                JOptionPane.showMessageDialog(null, "Seleccione una matrícula de la lista");
+
+            } else {
+                if (!agregarDeMatriculaATabla(Integer.parseInt(jListBorrar.getSelectedValue()), dtmDelete)) {
+                    JOptionPane.showMessageDialog(null, "El número de matrícula elegido ya expiró.");
+                }
+            }
         }
+
     }//GEN-LAST:event_jButtonBorrarAniadirTablaActionPerformed
 
     private void jButtonBorrarLimpiarTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarLimpiarTablaActionPerformed
@@ -859,7 +923,20 @@ public class PrincipalJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonBorrarLimpiarTablaActionPerformed
 
     private void jButtonBorrarRegistrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarRegistrosActionPerformed
-        borrarRegistros();
+
+        if (jTableBorrarTabla.getRowCount() > 0) {
+
+            int opcion = JOptionPane.showConfirmDialog(null, "Se borrarán de la base de datos todos los alumnos que aparecen en la tabla,"
+                    + "\n¿desea continuar?", "Borrado de alumnos", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.DEFAULT_OPTION, null);
+
+            if (opcion == 0) {
+                borrarRegistros();
+                limpiarTabla(dtmDelete);
+            }
+            actualizarListaMatriculas(dlmDelete);
+        } else {
+            JOptionPane.showMessageDialog(null, "Inserte alumnos en la tabla para empezar a borrar");
+        }
     }//GEN-LAST:event_jButtonBorrarRegistrosActionPerformed
 
     private void jButtonGuardarDescartarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarDescartarActionPerformed
@@ -883,6 +960,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
 
     private void jRadioButtonLeerManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonLeerManualActionPerformed
         jTextFieldLeerManual.setVisible(true);
+
         jTextFieldLeerManual.setText("");
         jListLeer.setVisible(false);
     }//GEN-LAST:event_jRadioButtonLeerManualActionPerformed
@@ -895,32 +973,17 @@ public class PrincipalJFrame extends javax.swing.JFrame {
 
     private void jRadioButtonActuManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonActuManualActionPerformed
         jTextFieldModificarMatricula.setEditable(true);
-        limpiarVariosJTextFields(new ArrayList<JTextField>() {
-            {
-                add(jTextFieldModificarMatricula);
-                add(jTextFieldModificarNombre);
-                add(jTextFieldModificarNot1Ev);
-                add(jTextFieldModificarNot2Ev);
-                add(jTextFieldModificarNotFinal);
-                add(jTextFieldModificarNotExtra);
-            }
-        });
+        jTextFieldModificarMatricula.setBackground(Color.WHITE);
+        limpiarVariosJTextFields(AJtfActu);
         jListModificar.setVisible(false);
 
     }//GEN-LAST:event_jRadioButtonActuManualActionPerformed
 
     private void jRadioButtonActuListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonActuListaActionPerformed
         jTextFieldModificarMatricula.setEditable(false);
-        limpiarVariosJTextFields(new ArrayList<JTextField>() {
-            {
-                add(jTextFieldModificarMatricula);
-                add(jTextFieldModificarNombre);
-                add(jTextFieldModificarNot1Ev);
-                add(jTextFieldModificarNot2Ev);
-                add(jTextFieldModificarNotFinal);
-                add(jTextFieldModificarNotExtra);
-            }
-        });
+        jTextFieldModificarMatricula.setBackground(Color.lightGray);
+
+        limpiarVariosJTextFields(AJtfActu);
         actualizarListaMatriculas(dlmUpdate);
         jListModificar.setVisible(true);
     }//GEN-LAST:event_jRadioButtonActuListaActionPerformed

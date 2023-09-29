@@ -34,11 +34,7 @@ public class CrudDatos {
 
         for (int i = 0; i < lista.size() && encontrado == false; i++) {
             if (lista.get(i).equals(alumnoAD)) {
-                lista.get(i).setNombre(alumnoAD.getNombre());
-                lista.get(i).setNot1Ev(alumnoAD.getNot1Ev());
-                lista.get(i).setNota2Ev(alumnoAD.getNota2Ev());
-                lista.get(i).setNotaFinal(alumnoAD.getNotaFinal());
-                lista.get(i).setNotaExtra(alumnoAD.getNotaExtra());
+                lista.set(i, alumnoAD);
                 encontrado = true;
             }
         }
