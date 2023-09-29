@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import modelo.AlumnoAD;
+import static vista.Mensajes.MENSAJES;
 
 public class PrincipalJFrame extends javax.swing.JFrame {
 
@@ -163,10 +164,14 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jLabelGuardarGuardarSalir = new javax.swing.JLabel();
         jButtonGuardarGuardarSalir = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Gestión de alumnos");
         setMinimumSize(new java.awt.Dimension(680, 450));
-        setPreferredSize(new java.awt.Dimension(650, 400));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jTabbedPaneGeneral.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -327,7 +332,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             }
         });
         jPanelLeer.add(jRadioButtonLeerManual);
-        jRadioButtonLeerManual.setBounds(330, 50, 240, 25);
+        jRadioButtonLeerManual.setBounds(330, 40, 240, 25);
 
         buttonGroupLeer.add(jRadioButtonLeerLista);
         jRadioButtonLeerLista.setText("Elegir una matrícula de la lista");
@@ -345,7 +350,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jPanelLeer.add(jLabelTituloLeer);
         jLabelTituloLeer.setBounds(10, 10, 580, 20);
         jPanelLeer.add(jTextFieldLeerManual);
-        jTextFieldLeerManual.setBounds(330, 80, 200, 25);
+        jTextFieldLeerManual.setBounds(330, 70, 200, 25);
 
         jTabbedPaneGeneral.addTab("Leer", jPanelLeer);
 
@@ -666,9 +671,10 @@ public class PrincipalJFrame extends javax.swing.JFrame {
     }
 
     private boolean agregarDeNumMatriACamposModificacion(int numMatri, ArrayList<JTextField> AJtf) {
+       
         boolean encontrada = false;
         for (int i = 0; i < alumnosAD.size() && encontrada == false; i++) {
-            if (alumnosAD.get(0).getNMatricula() == numMatri) {
+            if (alumnosAD.get(i).getNMatricula() == numMatri) {
                 encontrada = true;
                 AJtf.get(0).setText("" + alumnosAD.get(i).getNMatricula());
                 AJtf.get(1).setText("" + alumnosAD.get(i).getNombre());
@@ -691,13 +697,12 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         if (asignarCamposNotasAAlumno(aluAD, jTextFieldModificarNot1Ev, jTextFieldModificarNot2Ev, jTextFieldModificarNotFinal, jTextFieldModificarNotExtra)) {
 
             if (CrudDatos.update(alumnosAD, aluAD)) {
-                JOptionPane.showMessageDialog(null, "El alumno: \n"
-                        + aluAD.toString() + "\nHa sido modificado correctamente");
+                JOptionPane.showMessageDialog(null, MENSAJES[0][27]
+                        + aluAD.toString() + MENSAJES[0][28]);
             }
 
         } else {
-            JOptionPane.showMessageDialog(null, "Algunos campos contienen"
-                    + " información no válida");
+            JOptionPane.showMessageDialog(null, MENSAJES[0][8]);
         }
     }
 
@@ -712,19 +717,16 @@ public class PrincipalJFrame extends javax.swing.JFrame {
 
             if (asignarCamposNotasAAlumno(aluAD, jTextFieldCrearNot1Ev, jTextFieldCrearNot2Ev, jTextFieldCrearNotFinal, jTextFieldCrearNotExtra)) {
                 if (CrudDatos.create(alumnosAD, aluAD)) {
-                    JOptionPane.showMessageDialog(null, "El alumno: \n"
-                            + aluAD.toString() + "\nHa sido creado correctamente");
+                    JOptionPane.showMessageDialog(null, MENSAJES[0][27]
+                            + aluAD.toString() + MENSAJES[0][28]);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Ya existe un alumno con el"
-                            + " número de matrícula: " + aluAD.getNMatricula() + "."
-                            + "\nNo se puede crear el alumno. Pruebe otro número de matrícula.");
+                    JOptionPane.showMessageDialog(null, MENSAJES[0][29] + aluAD.getNMatricula() + MENSAJES[0][30]);
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Algunos campos contienen"
-                        + " información no válida");
+                JOptionPane.showMessageDialog(null, MENSAJES[0][8]);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Debe introducir un número de matrícula válido.");
+            JOptionPane.showMessageDialog(null, MENSAJES[0][10]);
         }
     }
 
@@ -787,10 +789,10 @@ public class PrincipalJFrame extends javax.swing.JFrame {
     private void jTabbedPaneGeneralStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPaneGeneralStateChanged
         // TODO add your handling code here:
         int indexActual = jTabbedPaneGeneral.getModel().getSelectedIndex();
-        
+
         switch (indexActual) {
             case 0:
-                
+
                 break;
             case 1:
                 jTextFieldLeerManual.setVisible(true);
@@ -831,16 +833,16 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             if (!jTextFieldLeerManual.getText().isEmpty() && jTextFieldLeerManual.getText().matches(regexMatricula)) {
 
                 if (!agregarDeMatriculaATabla(Integer.parseInt(jTextFieldLeerManual.getText()), dtmRead)) {
-                    JOptionPane.showMessageDialog(null, "No existe ningún alumno con esa matrícula.");
+                    JOptionPane.showMessageDialog(null, MENSAJES[0][11]);
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Introduzca una matrícula válida.");
+                JOptionPane.showMessageDialog(null, MENSAJES[0][12]);
             }
         } else {
             if (!jListLeer.isSelectionEmpty()) {
                 agregarDeMatriculaATabla(Integer.parseInt(jListLeer.getSelectedValue()), dtmRead);
             } else {
-                JOptionPane.showMessageDialog(null, "Seleccione una matrícula de la lista.");
+                JOptionPane.showMessageDialog(null, MENSAJES[0][13]);
             }
         }
     }//GEN-LAST:event_jButtonLeerAniadirActionPerformed
@@ -854,7 +856,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             if (!jTextFieldModificarMatricula.getText().isEmpty() && jTextFieldModificarMatricula.getText().matches(regexMatricula)) {
 
                 if (!agregarDeNumMatriACamposModificacion(Integer.parseInt(jTextFieldModificarMatricula.getText()), AJtfActu)) {
-                    JOptionPane.showMessageDialog(null, "No existe ningún alumno con esa matrícula.");
+                    JOptionPane.showMessageDialog(null, MENSAJES[0][14]);
                 } else {
                     for (JTextField t : AJtfActu) {
                         t.setEnabled(true);
@@ -863,7 +865,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
                     jTextFieldModificarMatricula.setBackground(Color.lightGray);
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Introduzca una matrícula válida.");
+                JOptionPane.showMessageDialog(null, MENSAJES[0][12]);
             }
         } else {
             if (!jListModificar.isSelectionEmpty()) {
@@ -873,7 +875,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
                     }
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Debe elegir una matrícula de la lista.");
+                JOptionPane.showMessageDialog(null, MENSAJES[0][16]);
             }
 
         }
@@ -887,7 +889,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         if (!jTextFieldModificarMatricula.getText().isEmpty()) {
             modificarAlumno();
         } else {
-            JOptionPane.showMessageDialog(null, "Indique primero una matrícula para modificar al alumno.");
+            JOptionPane.showMessageDialog(null, MENSAJES[0][17]);
         }
     }//GEN-LAST:event_jButtonModificarActionPerformed
 
@@ -898,15 +900,15 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             if (!jTextFieldBorrarManual.getText().isEmpty() && jTextFieldBorrarManual.getText().matches(regexMatricula)) {
                 agregarDeMatriculaATabla(Integer.parseInt(jTextFieldBorrarManual.getText()), dtmDelete);
             } else {
-                JOptionPane.showMessageDialog(null, "Introduzca una matrícula válida.");
+                JOptionPane.showMessageDialog(null, MENSAJES[0][12]);
             }
         } else {
             if (jListBorrar.isSelectionEmpty()) {
-                JOptionPane.showMessageDialog(null, "Seleccione una matrícula de la lista");
+                JOptionPane.showMessageDialog(null, MENSAJES[0][14]);
 
             } else {
                 if (!agregarDeMatriculaATabla(Integer.parseInt(jListBorrar.getSelectedValue()), dtmDelete)) {
-                    JOptionPane.showMessageDialog(null, "El número de matrícula elegido ya expiró.");
+                    JOptionPane.showMessageDialog(null, MENSAJES[0][20]);
                 }
             }
         }
@@ -921,8 +923,7 @@ public class PrincipalJFrame extends javax.swing.JFrame {
 
         if (jTableBorrarTabla.getRowCount() > 0) {
 
-            int opcion = JOptionPane.showConfirmDialog(null, "Se borrarán de la base de datos todos los alumnos que aparecen en la tabla,"
-                    + "\n¿desea continuar?", "Borrado de alumnos", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.DEFAULT_OPTION, null);
+            int opcion = JOptionPane.showConfirmDialog(null, MENSAJES[0][21], MENSAJES[0][31], JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.DEFAULT_OPTION, null);
 
             if (opcion == 0) {
                 borrarRegistros();
@@ -930,21 +931,19 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             }
             actualizarListaMatriculas(dlmDelete);
         } else {
-            JOptionPane.showMessageDialog(null, "Inserte alumnos en la tabla para empezar a borrar");
+            JOptionPane.showMessageDialog(null, MENSAJES[0][22]);
         }
     }//GEN-LAST:event_jButtonBorrarRegistrosActionPerformed
 
     private void jButtonGuardarDescartarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarDescartarActionPerformed
-        int opcion = JOptionPane.showConfirmDialog(null, "Se perderán todos los cambios que no hayan sido guardados."
-                + "\n¿Desea deshacer los cambios y volver al estado inicial?", "Deshacer cambios", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.DEFAULT_OPTION, null);
+        int opcion = JOptionPane.showConfirmDialog(null, MENSAJES[0][23], MENSAJES[0][32], JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.DEFAULT_OPTION, null);
         if (opcion == 0) {
             alumnosAD = Conexion.importarColeccion();
         }
     }//GEN-LAST:event_jButtonGuardarDescartarActionPerformed
 
     private void jButtonGuardarDescartarSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarDescartarSalirActionPerformed
-        int opcion = JOptionPane.showConfirmDialog(null, "Se dispone a salir del programa sin guardar ningún cambio. "
-                + "¿Está seguro?", "Salir del programa", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.DEFAULT_OPTION, null);
+        int opcion = JOptionPane.showConfirmDialog(null, MENSAJES[0][24], MENSAJES[0][33], JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.DEFAULT_OPTION, null);
         if (opcion == 0) {
             alumnosAD = null;
             System.exit(0);
@@ -953,11 +952,9 @@ public class PrincipalJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonGuardarDescartarSalirActionPerformed
 
     private void jButtonGuardarGuardarSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarGuardarSalirActionPerformed
-        int opcion = JOptionPane.showConfirmDialog(null, "Se dispone a guardar todo los cambios realizados hasta ahora."
-                + "\nEste proceso es IRREVERSIBLE. También se saldrá del programa."
-                + " ¿Desea continuar?", "Salir y guardar", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.DEFAULT_OPTION, null);
+        int opcion = JOptionPane.showConfirmDialog(null, MENSAJES[0][25], MENSAJES[0][34], JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.DEFAULT_OPTION, null);
         if (opcion == 0) {
-            opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro?",
+            opcion = JOptionPane.showConfirmDialog(null, MENSAJES[0][26],
                     "Confirmar salida y guardado", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.DEFAULT_OPTION, null);
             if (opcion == 0) {
                 Conexion.exportarColecion(alumnosAD);
@@ -1006,6 +1003,13 @@ public class PrincipalJFrame extends javax.swing.JFrame {
         jTextFieldBorrarManual.setVisible(true);
         jListBorrar.setVisible(false);
     }//GEN-LAST:event_jRadioButtonBorrarManualActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        int campo = JOptionPane.showConfirmDialog(null, MENSAJES[0][35], MENSAJES[0][33], JOptionPane.YES_NO_OPTION, JOptionPane.DEFAULT_OPTION, null);
+        if(campo == 0){
+            System.exit(0);        
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

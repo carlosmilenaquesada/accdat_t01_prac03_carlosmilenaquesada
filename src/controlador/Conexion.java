@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import modelo.AlumnoAD;
+import static vista.Mensajes.MENSAJES;
 
 public class Conexion {
 
@@ -30,15 +31,12 @@ public class Conexion {
                 coleccion = (ArrayList<AlumnoAD>) ois.readObject();
             }
         } catch (SecurityException ex) {
-            JOptionPane.showMessageDialog(null, "No tiene permisos para manipular el fichero."
-                    + "Se cerrará el programa.");
+            JOptionPane.showMessageDialog(null, MENSAJES[0][1]);
             System.exit(0);
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Fichero no econtrado o ilegible."
-                    + "No se pueden los cargar datos.");
+            JOptionPane.showMessageDialog(null, MENSAJES[0][2]);
         } catch (ClassNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "Fichero ilegible."
-                    + "No se pueden los cargar datos.");
+            JOptionPane.showMessageDialog(null, MENSAJES[0][2]);
         } finally {
             if (coleccion == null) {
                 coleccion = new ArrayList<>();
@@ -51,8 +49,7 @@ public class Conexion {
                     fis.close();
                 }
             } catch (IOException ex) {
-                JOptionPane.showMessageDialog(null, "Ocurrió un problema."
-                        + "\nEs posible que los datos no se carguen correctamente");
+                JOptionPane.showMessageDialog(null, MENSAJES[0][4]);
             }
         }
         return coleccion;
@@ -69,11 +66,9 @@ public class Conexion {
             }
 
         } catch (SecurityException ex) {
-            JOptionPane.showMessageDialog(null, "No tiene permisos para manipular el fichero."
-                    + "\nSe perderá la información guardada.");
+            JOptionPane.showMessageDialog(null, MENSAJES[0][5]);
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Fichero innaccesible."
-                    + "\nSe perderá la información guardada.");
+            JOptionPane.showMessageDialog(null, MENSAJES[0][6]);
         } finally {
             try {
                 if (oos != null) {
@@ -83,8 +78,7 @@ public class Conexion {
                     fos.close();
                 }
             } catch (IOException ex) {
-                JOptionPane.showMessageDialog(null, "Ocurrió un problema."
-                        + "\nEs posible que los datos no se guarden correctamente");
+                JOptionPane.showMessageDialog(null, MENSAJES[0][7]);
             }
         }
     }
