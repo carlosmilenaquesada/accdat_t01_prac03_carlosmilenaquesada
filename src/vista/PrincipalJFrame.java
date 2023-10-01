@@ -649,12 +649,6 @@ public class PrincipalJFrame extends javax.swing.JFrame {
             encontrado = true;
         }
 
-        /*for (int i = 0; i < alumnosAD.size() && encontrado == false; i++) {
-            if (numMat == alumnosAD.get(i).getNMatricula()) {
-                encontrado = true;
-                agregarAlumnoATabla(dtm, alumnosAD.get(i));
-            }
-        }*/
         return encontrado;
     }
 

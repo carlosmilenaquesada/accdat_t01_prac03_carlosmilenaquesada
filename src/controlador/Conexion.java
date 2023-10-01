@@ -40,6 +40,7 @@ public class Conexion {
         } finally {
             if (coleccion == null) {
                 coleccion = new ArrayList<>();
+                JOptionPane.showMessageDialog(null, MENSAJES[0][36]);
             }
             try {
                 if (ois != null) {

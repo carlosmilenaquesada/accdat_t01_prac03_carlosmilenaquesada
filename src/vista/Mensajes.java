@@ -5,7 +5,7 @@ public class Mensajes {
     public static final String[][] MENSAJES = initMensajes();
 
     public static String[][] initMensajes() {
-        String[][] mensajes = new String[1][36];
+        String[][] mensajes = new String[1][37];
 
         //MENSAJES CONEXIÓN
         mensajes[0][0] = "No tiene permisos para manipular el fichero."
@@ -23,6 +23,8 @@ public class Mensajes {
                 + "\nSe perderá la información guardada.";
         mensajes[0][7] = "Ocurrió un problema."
                 + "\nEs posible que los datos no se guarden correctamente";
+        mensajes[0][36] = "Actualmente no existe fichero de dato o es ilegible."
+                        + "\nSe creará uno automáticamente cuando se guarden los cambios.";
 
         //MENSAJES CLASE JFRAME
         mensajes[0][8] = "Algunos campos contienen"
